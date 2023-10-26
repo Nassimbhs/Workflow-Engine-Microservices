@@ -82,4 +82,8 @@ public class TacheAtraiteService {
         return tacheAtraiteRepository.getTachesTraiteesParResponsable(responsableId);
     }
 
+    public List<TacheAtraiter> findByWorkflowId(Long workflowId){
+        return tacheAtraiteRepository.findByWorkflowId(workflowId);
+    }
+
 }

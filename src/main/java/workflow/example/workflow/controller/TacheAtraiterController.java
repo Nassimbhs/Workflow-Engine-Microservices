@@ -124,4 +124,22 @@ public class TacheAtraiterController {
         return tacheAtraiterConverter.entityToDto( tacheAtraiteService.getTachesTraiteesParResponsable(responsableId));
     }
 
+    @GetMapping("/findByWorkflowId/{workflowId}")
+    @Operation(
+            summary = "Find workflowId",
+            description = "Find Tache tacheAtraiter by workflowId",
+            tags = {"TacheAtraiter"},
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TacheAtraiterDto.class))
+                    ),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
+            }
+    )
+    public List<TacheAtraiterDto> findByWorkflowId(@PathVariable Long workflowId){
+        return tacheAtraiterConverter.entityToDto(tacheAtraiteService.findByWorkflowId(workflowId));
+    }
 }
