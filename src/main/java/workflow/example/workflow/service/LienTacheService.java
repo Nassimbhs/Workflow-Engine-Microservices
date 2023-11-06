@@ -10,6 +10,7 @@ import workflow.example.workflow.entity.LienTache;
 import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.repository.LienTacheRepository;
 import workflow.example.workflow.repository.TacheRepository;
+import workflow.example.workflow.repository.WorkflowRepository;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
@@ -24,6 +25,8 @@ public class LienTacheService {
     private LienTacheRepository lienTacheRepository;
     @Autowired
     private TacheRepository tacheRepository;
+    @Autowired
+    private WorkflowRepository workflowRepository;
 
     @Transactional
     public ResponseEntity<Object> addLink(LienTache lienTache) {
@@ -88,5 +91,8 @@ public class LienTacheService {
     }
     public  List<LienTache> findByTacheIdWithTacheLiee(Long activiteId){
         return lienTacheRepository.findByTacheIdWithTacheLiee(activiteId);
+    }
+    public List<LienTache> findByWorkflowId(String workflowId){
+        return lienTacheRepository.findByWorkflowId(workflowId);
     }
 }

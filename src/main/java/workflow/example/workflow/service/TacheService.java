@@ -171,7 +171,6 @@ public class TacheService {
         }
 
         task.getUserList().remove(user);
-
         tacheRepository.save(task);
     }
 

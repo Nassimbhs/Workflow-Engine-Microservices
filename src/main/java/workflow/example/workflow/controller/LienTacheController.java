@@ -141,4 +141,22 @@ public class LienTacheController {
         return lienTacheConverter.entityToDto(lienTacheService.findByTacheIdWithTacheLiee(id));
     }
 
+    @GetMapping("/findByWorkflowId/{id}")
+    @Operation(
+            summary = "Find link by workflow id",
+            description = "Find link by workflow id.",
+            tags = { "LienTache" },
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = LienTacheDto.class))
+                    ),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
+            }
+    )
+    public List<LienTacheDto> findByWorkflowId(@PathVariable String id) {
+        return lienTacheConverter.entityToDto(lienTacheService.findByWorkflowId(id));
+    }
 }

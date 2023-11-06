@@ -16,6 +16,8 @@ public interface TacheAtraiteRepository extends JpaRepository<TacheAtraiter,Long
     List<TacheAtraiter> findByResponsable(Long responsableId);
     @Query("SELECT t FROM TacheAtraiter t WHERE t.statut = 'traité' AND t.responsable = :responsableId")
     List<TacheAtraiter> getTachesTraiteesParResponsable(@Param("responsableId") Long responsableId);
+    @Query("SELECT t FROM TacheAtraiter t WHERE t.statut = 'non traité' AND t.responsable = :responsableId")
+    List<TacheAtraiter> getTacheNontraiterByResponsable(@Param("responsableId") Long responsableId);
     List<TacheAtraiter> findByWorkflowId(Long workflowId);
 
 }

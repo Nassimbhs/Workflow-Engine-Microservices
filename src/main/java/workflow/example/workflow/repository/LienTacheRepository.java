@@ -13,6 +13,7 @@ public interface LienTacheRepository extends JpaRepository<LienTache,Long> {
     @Query("SELECT la FROM LienTache la JOIN la.tacheLien a WHERE a.id = :tacheId")
     List<LienTache> findByTacheIdWithTacheLiee(@Param("tacheId") Long tacheId);
 
+    List<LienTache> findByWorkflowId(String workflowId);
 
 
 }

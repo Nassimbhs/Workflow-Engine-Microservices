@@ -1,13 +1,11 @@
 package workflow.example.workflow.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import workflow.example.workflow.entity.TacheAtraiter;
 import workflow.example.workflow.repository.TacheAtraiteRepository;
-
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
@@ -85,5 +83,7 @@ public class TacheAtraiteService {
     public List<TacheAtraiter> findByWorkflowId(Long workflowId){
         return tacheAtraiteRepository.findByWorkflowId(workflowId);
     }
-
+    public List<TacheAtraiter> getTacheNontraiterByResponsable(Long responsableId){
+        return tacheAtraiteRepository.getTacheNontraiterByResponsable(responsableId);
+    }
 }
