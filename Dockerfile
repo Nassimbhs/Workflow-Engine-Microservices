@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
-WORKDIR /app
-COPY target/workflow-service.jar workflow-service.jar
-CMD ["java", "-jar", "workflow-service.jar"]
+FROM openjdk:11
+EXPOSE 8091
+ADD /target/Workflow-0.0.1-SNAPSHOT.jar workflow-service.jar
+ENTRYPOINT ["java", "-jar", "/workflow-service.jar"]
