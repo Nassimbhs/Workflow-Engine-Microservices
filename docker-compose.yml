@@ -3,7 +3,7 @@ services:
   workflow-service:
     depends_on:
       - mysql-db
-    image: nassimbenhassine/workflow-service
+    image: nassimbenhassine/workflow-service:latest
     container_name: workflow-service
     env_file: ./.env
     environment:
