@@ -1,6 +1,6 @@
 version: "3.3"
 services:
-  springboot-be:
+  workflow-service:
     depends_on:
       - mysql-db
     image: nassimbenhassine/workflow-service
