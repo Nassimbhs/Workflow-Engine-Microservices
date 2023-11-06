@@ -3,7 +3,7 @@ services:
   workflow-service:
     depends_on:
       - mysql-db
-    image: nassimbenhassine/workflow-service:latest
+    image: nassimbenhassine/workflow-1.0.jar
     container_name: workflow-service
     env_file: ./.env
     environment:
@@ -15,7 +15,7 @@ services:
         "spring.jpa.hibernate.ddl-auto" : "update"
         }'
     ports:
-      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+      - 8091:8091
 
 volumes:
   db:
