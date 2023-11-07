@@ -16,7 +16,7 @@ services:
   workflow-service:
     depends_on:
       - mysql-db
-    image: nassimbenhassine/workflow-1.0.jar
+    image: nassimbenhassine/workflow-service
     container_name: workflow-service
     env_file: ./.env
     environment:
