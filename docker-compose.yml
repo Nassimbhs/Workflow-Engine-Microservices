@@ -1,5 +1,18 @@
 version: "3.3"
 services:
+  mysql-db:
+    image: mysql:5.7
+    restart: unless-stopped
+    container_name: mysql-db
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    ports:
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - db:/var/lib/mysql
+
   workflow-service:
     depends_on:
       - mysql-db
@@ -15,7 +28,7 @@ services:
         "spring.jpa.hibernate.ddl-auto" : "update"
         }'
     ports:
-      - 8091:8091
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
 
 volumes:
   db:
