@@ -1,34 +1,142 @@
 version: "3.3"
 services:
-  mysql-db:
-    image: mysql:5.7
-    restart: unless-stopped
-    container_name: mysql-db
+  eureka:
+    image: nassimbenhassine/eureka
+    container_name: eureka
     env_file: ./.env
     environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://eureka-mysql:$MYSQLDB_DOCKER_PORT/eureka_db?useSSL=false",
+        "spring.datasource.username" : "$MYSQLDB_USER",
+        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
     ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
-    volumes:
-      - db:/var/lib/mysql
+      - $EUREKA_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
 
   workflow-service:
-    depends_on:
-      - mysql-db
     image: nassimbenhassine/workflow-service
     container_name: workflow-service
     env_file: ./.env
     environment:
       SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url"  : "jdbc:mysql://mysql-db:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
+        "spring.datasource.url"  : "jdbc:mysql://workflow-mysql:$MYSQLDB_DOCKER_PORT/workflow_db?useSSL=false",
         "spring.datasource.username" : "$MYSQLDB_USER",
         "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
         "spring.jpa.hibernate.ddl-auto" : "update"
-        }'
+      }'
     ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+      - $WORKFLOW_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    depends_on:
+      - workflow-mysql
+
+  user-service:
+    image: nassimbenhassine/user-service
+    container_name: user-service
+    env_file: ./.env
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://user-mysql:$MYSQLDB_DOCKER_PORT/user_db?useSSL=false",
+        "spring.datasource.username" : "$MYSQLDB_USER",
+        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
+    ports:
+      - $USER_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    depends_on:
+      - user-mysql
+
+  conge-service:
+    image: nassimbenhassine/conge-service
+    container_name: conge-service
+    env_file: ./.env
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://conge-mysql:$MYSQLDB_DOCKER_PORT/conge_db?useSSL=false",
+        "spring.datasource.username" : "$MYSQLDB_USER",
+        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
+    ports:
+      - $CONGE_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    depends_on:
+      - conge-mysql
+
+  cv-service:
+    image: nassimbenhassine/cv-service
+    container_name: cv-service
+    env_file: ./.env
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://cv-mysql:$MYSQLDB_DOCKER_PORT/cv_db?useSSL=false",
+        "spring.datasource.username" : "$MYSQLDB_USER",
+        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
+    ports:
+      - $CV_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    depends_on:
+      - cv-mysql
+
+  workflow-mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    container_name: workflow-mysql
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=workflow_db
+    ports:
+      - $WORKFLOW_MYSQL_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - workflow-db:/var/lib/mysql
+
+  user-mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    container_name: user-mysql
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=user_db
+    ports:
+      - $USER_MYSQL_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - user-db:/var/lib/mysql
+
+  conge-mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    container_name: conge-mysql
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=conge_db
+    ports:
+      - $CONGE_MYSQL_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - conge-db:/var/lib/mysql
+
+  cv-mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    container_name: cv-mysql
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=cv_db
+    ports:
+      - $CV_MYSQL_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - cv-db:/var/lib/mysql
 
 volumes:
-  db:
+  workflow-db:
+  user-db:
+  conge-db:
+  cv-db:
