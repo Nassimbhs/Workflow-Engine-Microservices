@@ -103,7 +103,7 @@ services:
     env_file: ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - MYSQL_DATABASE=user_db
+      - MYSQL_DATABASE=userdb
     ports:
       - $USER_MYSQL_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
@@ -116,7 +116,7 @@ services:
     env_file: ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - MYSQL_DATABASE=conge_db
+      - MYSQL_DATABASE=congedb
     ports:
       - $CONGE_MYSQL_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
@@ -129,14 +129,14 @@ services:
     env_file: ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - MYSQL_DATABASE=cv_db
+      - MYSQL_DATABASE=cvdb
     ports:
       - $CV_MYSQL_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
       - cv-db:/var/lib/mysql
 
 volumes:
-  workflow-db:
-  user-db:
-  conge-db:
-  cv-db:
+  workflowdb:
+  userdb:
+  congedb:
+  cvdb:
