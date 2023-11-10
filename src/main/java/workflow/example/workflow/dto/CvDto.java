@@ -16,10 +16,10 @@ public class CvDto {
     private Long tel;
     private String addresse;
     private String ville;
-    private List<FormationDto> formationDtos = new ArrayList<FormationDto>();
-    private List<CompetenceDto> competenceDtos = new ArrayList<CompetenceDto>();
-    private List<LangueDto> langueDtos = new ArrayList<LangueDto>();
-    private List<InteretDto> interetDtos = new ArrayList<InteretDto>();
-    private List<ExperienceDto> experienceDtos = new ArrayList<ExperienceDto>();
+    private List<FormationDto> formationDtos = new ArrayList<>();
+    private List<CompetenceDto> competenceDtos = new ArrayList<>();
+    private List<LangueDto> langueDtos = new ArrayList<>();
+    private List<InteretDto> interetDtos = new ArrayList<>();
+    private List<ExperienceDto> experienceDtos = new ArrayList<>();
 
 }

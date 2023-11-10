@@ -21,8 +21,8 @@ public class TacheDto implements Serializable {
     private String action;
     private String approbation;
 
-    private List<LienTacheDto> lienTacheDtos = new ArrayList<LienTacheDto>();
-    //private List<UserDto> userDtoList = new ArrayList<UserDto>();
-    private List<TacheAtraiterDto> tacheAtraiterDtos = new ArrayList<TacheAtraiterDto>();
+    private List<LienTacheDto> lienTacheDtos = new ArrayList<>();
+    //private List<UserDto> userDtoList = new ArrayList<>();
+    private List<TacheAtraiterDto> tacheAtraiterDtos = new ArrayList<>();
 
 }

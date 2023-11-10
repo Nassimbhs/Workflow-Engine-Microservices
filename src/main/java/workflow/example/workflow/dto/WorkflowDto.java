@@ -24,5 +24,5 @@ public class WorkflowDto {
     private String tacheAecouter;
     private String evenement;
 
-    private List<TacheDto> tacheDtoList = new ArrayList<TacheDto>();
+    private List<TacheDto> tacheDtoList = new ArrayList<>();
 }
