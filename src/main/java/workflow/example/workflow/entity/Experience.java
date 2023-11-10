@@ -3,11 +3,12 @@ package workflow.example.workflow.entity;
 import javax.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data
-public class Experience {
+public class Experience implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

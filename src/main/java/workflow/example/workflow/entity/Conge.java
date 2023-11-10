@@ -20,6 +20,6 @@ public class Conge implements Serializable {
     private String responsable;
 
     @ManyToOne
-    private TacheAtraiter tacheAtraiter;
+    private transient TacheAtraiter tacheAtraiter;
 
 }

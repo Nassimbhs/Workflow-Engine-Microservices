@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 import workflow.example.workflow.listener.TacheAtraiterListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.Objects;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TacheAtraiter {
+public class TacheAtraiter implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

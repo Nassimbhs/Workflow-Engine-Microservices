@@ -23,19 +23,19 @@ public class Cv implements Serializable {
     private String ville;
 
     @OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
-    private List<Competence> competences = new ArrayList<>();
+    private transient List<Competence> competences = new ArrayList<>();
 
     @OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
-    private List<Formation> formations = new ArrayList<>();
+    private transient List<Formation> formations = new ArrayList<>();
 
     @OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
-    private List<Langue> langues = new ArrayList<>();
+    private transient List<Langue> langues = new ArrayList<>();
 
     @OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
     private List<Experience> experiences = new ArrayList<>();
 
     @OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
-    private List<Interet> interets = new ArrayList<>();
+    private transient List<Interet> interets = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -43,6 +43,6 @@ public class Cv implements Serializable {
             joinColumns = @JoinColumn(name = "cv_id"),
             inverseJoinColumns = @JoinColumn(name = "tache_id")
     )
-    private List<TacheAtraiter> tachesAtraiter = new ArrayList<>();
+    private transient List<TacheAtraiter> tachesAtraiter = new ArrayList<>();
 
 }
