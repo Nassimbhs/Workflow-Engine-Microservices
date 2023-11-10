@@ -64,8 +64,8 @@ public class TacheAtraiterController {
         return tacheAtraiteService.marquerTacheCommeTraite(id, tacheAtraiter);
     }
     @PutMapping("/rejeter/{id}")
-    public ResponseEntity<Object> RejeterTache(@PathVariable Long id, @RequestBody TacheAtraiter tacheAtraiter) {
-        return tacheAtraiteService.RejeterTache(id, tacheAtraiter);
+    public ResponseEntity<Object> rejeterTache(@PathVariable Long id, @RequestBody TacheAtraiter tacheAtraiter) {
+        return tacheAtraiteService.rejeterTache(id, tacheAtraiter);
     }
 
     @GetMapping("/allTacheAtraiter/")

@@ -64,7 +64,7 @@ public class TacheAtraiteServiceTest {
     }
 
     @Test
-    public void testRejeterTache() {
+    public void testrejeterTache() {
         Long id = 1L;
         TacheAtraiter tacheAtraiter = new TacheAtraiter();
         tacheAtraiter.setId(id);
@@ -72,7 +72,7 @@ public class TacheAtraiteServiceTest {
         Mockito.when(tacheAtraiteRepository.findById(id)).thenReturn(Optional.of(tacheAtraiter));
         Mockito.when(tacheAtraiteRepository.save(tacheAtraiter)).thenReturn(tacheAtraiter);
 
-        ResponseEntity<Object> response = tacheAtraiteService.RejeterTache(id, tacheAtraiter);
+        ResponseEntity<Object> response = tacheAtraiteService.rejeterTache(id, tacheAtraiter);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
@@ -91,6 +91,6 @@ public class TacheAtraiteServiceTest {
 
         Mockito.when(tacheAtraiteRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(ResponseStatusException.class, () -> tacheAtraiteService.RejeterTache(id, tacheAtraiter));
+        assertThrows(ResponseStatusException.class, () -> tacheAtraiteService.rejeterTache(id, tacheAtraiter));
     }
 }

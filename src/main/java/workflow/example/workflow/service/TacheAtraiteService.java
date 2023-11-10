@@ -45,7 +45,7 @@ public class TacheAtraiteService {
     }
 
     @Transactional
-    public ResponseEntity<Object> RejeterTache(Long id, TacheAtraiter tacheAtraiter) {
+    public ResponseEntity<Object> rejeterTache(Long id, TacheAtraiter tacheAtraiter) {
         tacheAtraiteRepository.findById(id).ifPresentOrElse(
                 a -> {
                     a.setStatut("traité");
