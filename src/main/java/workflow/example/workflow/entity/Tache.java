@@ -2,8 +2,6 @@ package workflow.example.workflow.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import workflow.example.workflow.listener.TacheListener;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +14,6 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@EntityListeners(TacheListener.class)
 public class Tache implements Serializable {
 
     @Id
@@ -44,7 +41,7 @@ public class Tache implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
    @ToString.Exclude
-   private List<User> userList = new ArrayList<>();
+   private transient List<User> userList = new ArrayList<>();
 
     @OneToMany(mappedBy = "tacheAtraite", cascade = CascadeType.ALL)
     @ToString.Exclude

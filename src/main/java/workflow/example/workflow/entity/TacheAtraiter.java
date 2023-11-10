@@ -2,8 +2,6 @@ package workflow.example.workflow.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import workflow.example.workflow.listener.TacheAtraiterListener;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,7 +13,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@EntityListeners(TacheAtraiterListener.class)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

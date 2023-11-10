@@ -2,8 +2,6 @@ package workflow.example.workflow.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import workflow.example.workflow.listener.WorkflowListener;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,14 +9,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-
 @Entity
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(WorkflowListener.class)
 public class Workflow implements Serializable {
 
     @Id
