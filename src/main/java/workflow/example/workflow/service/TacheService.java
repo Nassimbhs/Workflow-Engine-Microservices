@@ -12,11 +12,9 @@ import reactor.core.publisher.Mono;
 import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.entity.TacheAtraiter;
 import workflow.example.workflow.entity.User;
-import workflow.example.workflow.listener.TacheListener;
 import workflow.example.workflow.repository.TacheAtraiteRepository;
 import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.repository.UserRepository;
-
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -28,11 +26,7 @@ public class TacheService {
     TacheRepository tacheRepository;
 
     private final TacheAtraiteRepository tacheAtraiteRepository;
-
-    private final TacheListener tacheListener;
-
     private final WebClient webClient;
-
     private final UserRepository userRepository;
 
     @Transactional
@@ -97,7 +91,7 @@ public class TacheService {
 
     @Transactional
     public void deleteTacheById(Long id) {
-        Tache tache = tacheRepository
+        var tache = tacheRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tache not found !"));
         tacheRepository.delete(tache);
@@ -128,7 +122,7 @@ public class TacheService {
         List<User> usersToAdd = new ArrayList<>();
 
         for (Long userId : userIds) {
-            User user = userRepository.findById(userId)
+            var user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec l'ID : " + userId));
 
             if (!user.getTaches().isEmpty() && user.getTaches().contains(task)) {
@@ -189,7 +183,7 @@ public class TacheService {
 
     @Transactional
     public void assignUsersFromGroupToTask(Long groupId, Long taskId) {
-        GroupeUser groupeUser = webClient
+        var groupeUser = webClient
                 .get()
                 .uri("/api/v1/GroupeUser/getGroup/{groupId}", groupId)
                 .retrieve()
@@ -199,12 +193,10 @@ public class TacheService {
                 )
                 .bodyToMono(GroupeUser.class)
                 .block();
-        System.out.println("Group user id : "+groupeUser.getId());
-        if (groupeUser == null) {
-            throw new IllegalArgumentException("Group not found");
-        }
+        assert groupeUser != null;
+        log.info("Group user id {} : ", groupeUser.getId());
 
-        Tache tache = tacheRepository.findById(taskId).orElseThrow(() -> new IllegalArgumentException("Task not found"));
+        var tache = tacheRepository.findById(taskId).orElseThrow(() -> new IllegalArgumentException("Task not found"));
         Set<User> users = groupeUser.getUsers();
         tache.getUserList().addAll(users);
         tacheRepository.save(tache);

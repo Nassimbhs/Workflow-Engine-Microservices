@@ -19,7 +19,8 @@ import java.util.Map;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-public class WorkflowServiceTest {
+
+class WorkflowServiceTest {
     @InjectMocks
     private WorkflowService workflowService;
 
@@ -35,7 +36,7 @@ public class WorkflowServiceTest {
     }
 
     @Test
-    public void testAddWorkflow() {
+    void testAddWorkflow() {
         Workflow workflow = new Workflow();
         workflow.setName("Test Workflow");
         Mockito.when(workflowRepository.save(Mockito.any(Workflow.class))).thenReturn(workflow);
@@ -48,7 +49,7 @@ public class WorkflowServiceTest {
     }
 
     @Test
-    public void testAddWorkflowConflict() {
+    void testAddWorkflowConflict() {
         Workflow workflow = new Workflow();
         workflow.setId(1L);
         Mockito.when(workflowRepository.existsById(workflow.getId())).thenReturn(true);
@@ -57,7 +58,7 @@ public class WorkflowServiceTest {
     }
 
     @Test
-    public void testUpdateWorkflow() {
+    void testUpdateWorkflow() {
         Long workflowId = 1L;
         Workflow existingWorkflow = new Workflow();
         existingWorkflow.setId(workflowId);
@@ -80,7 +81,7 @@ public class WorkflowServiceTest {
         assertEquals("Workflow successfully updated!", actualMessage);
     }
     @Test
-    public void testUpdateWorkflowNotFound() {
+    void testUpdateWorkflowNotFound() {
         Long id = 1L;
         Workflow updatedWorkflow = new Workflow();
 
@@ -90,7 +91,7 @@ public class WorkflowServiceTest {
     }
 
     @Test
-    public void testDeleteWorkflowById() {
+    void testDeleteWorkflowById() {
         Long id = 1L;
         Workflow workflow = new Workflow();
 
@@ -102,7 +103,7 @@ public class WorkflowServiceTest {
     }
 
     @Test
-    public void testDeleteWorkflowByIdNotFound() {
+    void testDeleteWorkflowByIdNotFound() {
         Long id = 1L;
 
         Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.empty());
@@ -111,7 +112,7 @@ public class WorkflowServiceTest {
     }
 
     @Test
-    public void testGetAllWorkflows() {
+    void testGetAllWorkflows() {
         List<Workflow> workflows = new ArrayList<>();
         Mockito.when(workflowRepository.findAll()).thenReturn(workflows);
 
@@ -121,7 +122,7 @@ public class WorkflowServiceTest {
     }
 
     @Test
-    public void testFindWorkflowById() {
+    void testFindWorkflowById() {
         Long id = 1L;
         Workflow workflow = new Workflow();
 
@@ -133,11 +134,12 @@ public class WorkflowServiceTest {
     }
 
     @Test
-    public void testFindWorkflowByIdNotFound() {
+    void testFindWorkflowByIdNotFound() {
         Long id = 1L;
 
         Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(ResponseStatusException.class, () -> workflowService.findWorkflowById(id));
     }
+
 }

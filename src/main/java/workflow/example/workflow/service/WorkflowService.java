@@ -10,7 +10,6 @@ import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.entity.Workflow;
 import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.repository.WorkflowRepository;
-
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -42,14 +41,14 @@ public class WorkflowService {
         workflow.setCreationDate(new Date());
         workflowRepository.save(workflow);
 
-        Tache activity1 = new Tache();
+        var activity1 = new Tache();
         activity1.setName("Début");
         activity1.setDescription("Default activity 1");
         activity1.setCreationDate(new Date());
         activity1.setWorkflowTache(workflow);
         tacheRepository.save(activity1);
 
-        Tache activity2 = new Tache();
+        var activity2 = new Tache();
         activity2.setName("Fin");
         activity2.setDescription("Default activity 2");
         activity2.setCreationDate(new Date());
@@ -92,7 +91,7 @@ public class WorkflowService {
 
     @Transactional
     public void deleteWorkflowById(Long id) {
-        Workflow workflow = workflowRepository
+        var workflow = workflowRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Workflow not found !"));
         workflowRepository.delete(workflow);
@@ -112,7 +111,7 @@ public class WorkflowService {
     }
 
     public List<String> getWorkflowTables(Long workflowId) throws NotFoundException {
-        Workflow workflow = workflowRepository.findById(workflowId)
+        var workflow = workflowRepository.findById(workflowId)
                 .orElseThrow(() -> new NotFoundException("Workflow not found with id: " + workflowId));
         return tableService.getTables(workflow.getJdbcUrl(), workflow.getUsername(), workflow.getPassword(),workflow.getSgbd());
     }
