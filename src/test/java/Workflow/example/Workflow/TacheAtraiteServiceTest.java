@@ -1,4 +1,4 @@
-package Workflow.example.Workflow;
+package workflow.example.workflow;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,10 +13,10 @@ import workflow.example.workflow.entity.TacheAtraiter;
 import workflow.example.workflow.repository.TacheAtraiteRepository;
 import workflow.example.workflow.service.TacheAtraiteService;
 
+import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TacheAtraiteServiceTest {
 
@@ -43,10 +43,15 @@ public class TacheAtraiteServiceTest {
         ResponseEntity<Object> response = tacheAtraiteService.marquerTacheCommeTraite(id, tacheAtraiter);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("tacheAtraiter successfully updated!", response.getBody());
+
+        assertTrue(response.getBody() instanceof Map);
+        Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
+
+        assertEquals("tacheAtraiter successfully updated!", responseBody.get("message"));
         assertEquals("traité", tacheAtraiter.getStatut());
         assertEquals("Accepter", tacheAtraiter.getApprobation());
     }
+
 
     @Test
     public void testMarquerTacheCommeTraiteNotFound() {
@@ -70,7 +75,11 @@ public class TacheAtraiteServiceTest {
         ResponseEntity<Object> response = tacheAtraiteService.RejeterTache(id, tacheAtraiter);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("tacheAtraiter successfully updated!", response.getBody());
+
+        assertTrue(response.getBody() instanceof Map);
+        Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
+
+        assertEquals("tacheAtraiter successfully updated!", responseBody.get("message"));
         assertEquals("traité", tacheAtraiter.getStatut());
         assertEquals("Rejeter", tacheAtraiter.getApprobation());
     }

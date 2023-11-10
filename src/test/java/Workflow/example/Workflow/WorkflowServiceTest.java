@@ -1,4 +1,4 @@
-package Workflow.example.Workflow;
+package workflow.example.workflow;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
