@@ -17,7 +17,6 @@
 		<java.version>11</java.version>
 		<maven-jar-plugin.version>3.0.1</maven-jar-plugin.version>
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
-		<jacoco-maven-plugin>0.8.6</jacoco-maven-plugin>
 	</properties>
 	<dependencies>
 
@@ -126,9 +125,10 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco-maven-plugin}</version>
+				<version>0.8.3</version>
 				<executions>
 					<execution>
+						<id>prepare-agent</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
@@ -140,7 +140,20 @@
 							<goal>report</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+
+							<dataFile>target/jacoco.exec</dataFile>
+							<outputDirectory>target/my-reports</outputDirectory>
+						</configuration>
+					</execution>
 				</executions>
+
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
