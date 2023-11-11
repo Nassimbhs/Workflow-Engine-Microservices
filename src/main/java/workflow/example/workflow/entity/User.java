@@ -3,17 +3,17 @@ package workflow.example.workflow.entity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @Table(	name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
@@ -41,13 +41,17 @@ public class User implements Serializable {
     @JoinTable(	name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ToString.Exclude
     private Set<Role> roles = new HashSet<>();
 
     @ManyToMany(mappedBy = "userList", cascade = CascadeType.PERSIST)
+    @ToString.Exclude
     private final List<Tache> taches = new ArrayList<>();
 
     @ManyToMany(mappedBy = "users")
+    @ToString.Exclude
     private final Set<GroupeUser> groups = new HashSet<>();
+
     public User() {
     }
 
@@ -101,4 +105,16 @@ public class User implements Serializable {
         return taches;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return getId() != null && Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
