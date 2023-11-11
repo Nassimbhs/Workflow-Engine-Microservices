@@ -1,18 +1,11 @@
 package workflow.example.workflow.entity;
 
-import lombok.*;
-import org.hibernate.Hibernate;
-
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
+import lombok.Data;
 
 @Entity
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-public class Interet implements Serializable {
+@Data
+public class Interet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,16 +15,4 @@ public class Interet implements Serializable {
     @ManyToOne
     private Cv cv;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Interet interet = (Interet) o;
-        return getId() != null && Objects.equals(getId(), interet.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

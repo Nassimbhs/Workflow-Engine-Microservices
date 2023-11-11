@@ -2,6 +2,7 @@ package workflow.example.workflow.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class Tache implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
    @ToString.Exclude
-   private transient List<User> userList = new ArrayList<>();
+   private List<User> userList = new ArrayList<>();
 
     @OneToMany(mappedBy = "tacheAtraite", cascade = CascadeType.ALL)
     @ToString.Exclude

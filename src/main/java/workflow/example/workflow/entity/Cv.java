@@ -2,6 +2,7 @@ package workflow.example.workflow.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,15 +28,15 @@ public class Cv implements Serializable {
 
     @OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private transient List<Competence> competences = new ArrayList<>();
+    private List<Competence> competences = new ArrayList<>();
 
     @OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private transient List<Formation> formations = new ArrayList<>();
+    private List<Formation> formations = new ArrayList<>();
 
     @OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private transient List<Langue> langues = new ArrayList<>();
+    private List<Langue> langues = new ArrayList<>();
 
     @OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
     @ToString.Exclude
@@ -43,7 +44,7 @@ public class Cv implements Serializable {
 
     @OneToMany(mappedBy = "cv", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private transient List<Interet> interets = new ArrayList<>();
+    private List<Interet> interets = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -52,7 +53,7 @@ public class Cv implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "tache_id")
     )
     @ToString.Exclude
-    private transient List<TacheAtraiter> tachesAtraiter = new ArrayList<>();
+    private List<TacheAtraiter> tachesAtraiter = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

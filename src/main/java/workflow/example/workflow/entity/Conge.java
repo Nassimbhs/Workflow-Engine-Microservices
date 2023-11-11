@@ -26,7 +26,7 @@ public class Conge implements Serializable {
     private String responsable;
 
     @ManyToOne
-    private transient TacheAtraiter tacheAtraiter;
+    private TacheAtraiter tacheAtraiter;
 
     @Override
     public boolean equals(Object o) {
