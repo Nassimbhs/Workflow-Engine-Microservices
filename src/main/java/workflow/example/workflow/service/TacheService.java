@@ -157,7 +157,7 @@ public class TacheService {
         Tache task = tacheRepository.findById(tacheId)
                 .orElseThrow(() -> new RuntimeException("Tâche non trouvée"));
 
-        User user = userRepository.findById(userId)
+        var user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
         if (!task.getUserList().contains(user)) {
@@ -169,7 +169,7 @@ public class TacheService {
     }
 
     public List<User> getUtilisateursDeTache(long tacheId) {
-        Tache tache = tacheRepository.findById(tacheId);
+        var tache = tacheRepository.findById(tacheId);
         return tache.getUserList();
     }
 

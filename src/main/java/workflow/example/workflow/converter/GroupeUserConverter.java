@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class GroupeUserConverter {
 
     public GroupeUserDto entityToDto(GroupeUser groupeUser){
-        GroupeUserDto dto = new GroupeUserDto();
+        var dto = new GroupeUserDto();
         dto.setId(groupeUser.getId());
         dto.setNom(groupeUser.getNom());
         dto.setDescription(groupeUser.getDescription());

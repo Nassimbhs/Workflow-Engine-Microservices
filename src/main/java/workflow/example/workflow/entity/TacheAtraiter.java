@@ -36,7 +36,7 @@ public class TacheAtraiter implements Serializable {
 
     @OneToMany(mappedBy = "tacheAtraiter", cascade = CascadeType.ALL)
     @ToString.Exclude
-    List<Conge> conges = new ArrayList<>();
+    private List<Conge> conges = new ArrayList<>();
 
     @ManyToMany(mappedBy = "tachesAtraiter")
     @ToString.Exclude

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class LangueConverter {
 
     public LangueDto entityToDto(Langue langue){
-        LangueDto dto = new LangueDto();
+        var dto = new LangueDto();
         dto.setId(langue.getId());
         dto.setNom(langue.getNom());
         dto.setNiveau(langue.getNiveau());

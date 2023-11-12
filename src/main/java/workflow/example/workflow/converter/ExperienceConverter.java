@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class ExperienceConverter {
 
     public ExperienceDto entityToDto(Experience experience){
-        ExperienceDto dto = new ExperienceDto();
+        var dto = new ExperienceDto();
         dto.setId(experience.getId());
         dto.setPoste(experience.getPoste());
         dto.setEmployeur(experience.getEmployeur());

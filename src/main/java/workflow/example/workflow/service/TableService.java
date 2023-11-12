@@ -32,8 +32,7 @@ public class TableService {
             throw new IllegalArgumentException("Unsupported SGBD: " + sgbd);
         }
 
-        List<String> tables = jdbcTemplate.queryForList(query, String.class);
-        return tables;
+        return jdbcTemplate.queryForList(query, String.class);
     }
 
 

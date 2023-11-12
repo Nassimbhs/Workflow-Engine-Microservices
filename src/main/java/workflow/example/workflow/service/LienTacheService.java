@@ -11,7 +11,6 @@ import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.repository.LienTacheRepository;
 import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.repository.WorkflowRepository;
-
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
@@ -31,13 +30,13 @@ public class LienTacheService {
     @Transactional
     public ResponseEntity<Object> addLink(LienTache lienTache) {
         Optional<Tache> tache = tacheRepository.findById(lienTache.getId());
-        if (!tache.isPresent()) {
+        if (tache.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "activity with id " + lienTache.getId() + " not found");
         }
         lienTache.setTacheLien(tache.get());
 
         lienTacheRepository.save(lienTache);
-        LienTacheDto lienTacheDTO = new LienTacheDto();
+        var lienTacheDTO = new LienTacheDto();
         lienTacheDTO.setId(lienTache.getId());
         lienTacheDTO.setSource(lienTache.getSource());
         lienTacheDTO.setTarget(lienTache.getTarget());
@@ -78,7 +77,7 @@ public class LienTacheService {
     }
 
     public List<LienTache> getAllLinks() {
-        return (List<LienTache>) lienTacheRepository.findAll();
+        return lienTacheRepository.findAll();
     }
 
     public LienTache findLinkById(Long id) {
