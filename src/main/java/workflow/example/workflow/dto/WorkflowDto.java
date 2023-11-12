@@ -3,6 +3,8 @@ package workflow.example.workflow.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkflowDto {
+public class WorkflowDto implements Serializable {
 
     private Long id;
     private String name;
