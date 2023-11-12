@@ -2,7 +2,6 @@ package workflow.example.workflow.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;

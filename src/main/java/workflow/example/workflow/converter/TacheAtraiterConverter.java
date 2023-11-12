@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Component
 public class TacheAtraiterConverter {
     public TacheAtraiterDto entityToDto(TacheAtraiter tacheAtraiter) {
-        TacheAtraiterDto dto = new TacheAtraiterDto();
+        var dto = new TacheAtraiterDto();
         dto.setId(tacheAtraiter.getId());
         dto.setResponsable(tacheAtraiter.getResponsable());
         dto.setName(tacheAtraiter.getName());

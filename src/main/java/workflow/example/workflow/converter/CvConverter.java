@@ -26,7 +26,7 @@ public class CvConverter {
         if (cv == null) {
             return null;
         }
-        CvDto dto = new CvDto();
+        var dto = new CvDto();
         dto.setId(cv.getId());
         dto.setEmail(cv.getEmail());
         dto.setTel(cv.getTel());

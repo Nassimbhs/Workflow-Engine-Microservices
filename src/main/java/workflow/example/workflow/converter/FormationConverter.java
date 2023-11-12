@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Component
 public class FormationConverter {
     public FormationDto entityToDto(Formation formation){
-        FormationDto dto = new FormationDto();
+        var dto = new FormationDto();
         dto.setId(formation.getId());
         dto.setNomFormation(formation.getNomFormation());
         dto.setEtablissement(formation.getEtablissement());

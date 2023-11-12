@@ -2,7 +2,6 @@ package workflow.example.workflow.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,8 +14,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class TacheAtraiter implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class JsonDataConverter {
 
     public JsonDataDto entityToDto(JsonData jsonData){
-        JsonDataDto dto = new JsonDataDto();
+        var dto = new JsonDataDto();
         dto.setId(jsonData.getId());
         dto.setData(jsonData.getData());
         dto.setResponsable(jsonData.getResponsable());

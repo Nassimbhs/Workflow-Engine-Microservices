@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class UserConverter {
 
     public UserDto entityToDto(User user){
-        UserDto dto = new UserDto();
+        var dto = new UserDto();
         dto.setId(user.getId());
         dto.setEmail(user.getEmail());
         dto.setUsername(user.getUsername());

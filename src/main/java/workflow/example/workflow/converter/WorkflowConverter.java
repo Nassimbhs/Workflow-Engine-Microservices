@@ -15,7 +15,7 @@ public class WorkflowConverter {
 
     public WorkflowDto entityToDto(Workflow workflow){
 
-        WorkflowDto dto = new WorkflowDto();
+        var dto = new WorkflowDto();
         dto.setId(workflow.getId());
         dto.setName(workflow.getName());
         dto.setDescription(workflow.getDescription());

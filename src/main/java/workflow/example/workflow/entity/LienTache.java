@@ -32,7 +32,7 @@ public class LienTache implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        LienTache lienTache = (LienTache) o;
+        var lienTache = (LienTache) o;
         return getId() != null && Objects.equals(getId(), lienTache.getId());
     }
 

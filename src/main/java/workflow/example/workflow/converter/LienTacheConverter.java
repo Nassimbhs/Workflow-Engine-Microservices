@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class LienTacheConverter {
 
     public LienTacheDto entityToDto(LienTache lienTache) {
-        LienTacheDto dto = new LienTacheDto();
+        var dto = new LienTacheDto();
         dto.setId(lienTache.getId());
         dto.setSource(lienTache.getSource());
         dto.setTarget(lienTache.getTarget());

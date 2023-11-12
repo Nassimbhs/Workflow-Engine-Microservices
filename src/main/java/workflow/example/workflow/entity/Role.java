@@ -2,7 +2,6 @@ package workflow.example.workflow.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -24,7 +23,7 @@ public class Role implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Role role = (Role) o;
+        var role = (Role) o;
         return getId() != null && Objects.equals(getId(), role.getId());
     }
 

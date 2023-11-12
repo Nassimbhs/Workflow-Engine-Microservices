@@ -15,7 +15,7 @@ public class TableService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<String> getTables(String jdbcUrl, String username, String password, String sgbd) {
+    public List<String> getTables(String sgbd) {
         String query;
 
         if (sgbd == null) {

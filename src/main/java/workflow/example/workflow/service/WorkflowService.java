@@ -113,7 +113,7 @@ public class WorkflowService {
     public List<String> getWorkflowTables(Long workflowId) throws NotFoundException {
         var workflow = workflowRepository.findById(workflowId)
                 .orElseThrow(() -> new NotFoundException("Workflow not found with id: " + workflowId));
-        return tableService.getTables(workflow.getJdbcUrl(), workflow.getUsername(), workflow.getPassword(),workflow.getSgbd());
+        return tableService.getTables(workflow.getSgbd());
     }
 
 }

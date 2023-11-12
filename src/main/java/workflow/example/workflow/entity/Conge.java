@@ -2,7 +2,6 @@ package workflow.example.workflow.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -32,7 +31,7 @@ public class Conge implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Conge conge = (Conge) o;
+        var conge = (Conge) o;
         return getId() != null && Objects.equals(getId(), conge.getId());
     }
 
