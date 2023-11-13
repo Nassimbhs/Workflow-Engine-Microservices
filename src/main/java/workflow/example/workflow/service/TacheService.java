@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 import workflow.example.workflow.converter.TacheConverter;
-import workflow.example.workflow.dto.TacheDto;
 import workflow.example.workflow.entity.GroupeUser;
 import reactor.core.publisher.Mono;
 import workflow.example.workflow.entity.Tache;
@@ -28,7 +27,6 @@ public class TacheService {
     private final TacheAtraiteRepository tacheAtraiteRepository;
     private final WebClient webClient;
     private final UserRepository userRepository;
-    private final TacheConverter tacheConverter;
     @Transactional
     public ResponseEntity<Object> addTache(Tache tache) {
         Long id = tache.getId();
