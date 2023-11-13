@@ -28,7 +28,7 @@ public class LienTacheService {
 
     @Transactional
     public ResponseEntity<Object> addLink(LienTacheDto lienTacheDto) {
-        LienTache lienTache = lienTacheConverter.dtoToEntity(lienTacheDto);
+        var lienTache = lienTacheConverter.dtoToEntity(lienTacheDto);
         Optional<Tache> tache = tacheRepository.findById(lienTache.getId());
         if (tache.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "activity with id " + lienTache.getId() + " not found");
@@ -36,7 +36,7 @@ public class LienTacheService {
         lienTache.setTacheLien(tache.get());
 
         lienTacheRepository.save(lienTache);
-        LienTacheDto lienTacheDTO = new LienTacheDto();
+        var lienTacheDTO = new LienTacheDto();
         lienTacheDTO.setId(lienTache.getId());
         lienTacheDTO.setSource(lienTache.getSource());
         lienTacheDTO.setTarget(lienTache.getTarget());
@@ -52,7 +52,7 @@ public class LienTacheService {
     }
     @Transactional
     public ResponseEntity<Object> updateLink(Long id, LienTacheDto lienTacheDto) {
-        LienTache lienTache = lienTacheConverter.dtoToEntity(lienTacheDto);
+        var lienTache = lienTacheConverter.dtoToEntity(lienTacheDto);
         lienTacheRepository.findById(id).ifPresentOrElse(
                 a -> {
                     a.setSource(lienTache.getSource());
@@ -71,14 +71,14 @@ public class LienTacheService {
 
     @Transactional
     public void deleteLinkById(Long id) {
-        LienTache lienTache = lienTacheRepository
+        var lienTache = lienTacheRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Link not found !"));
         lienTacheRepository.delete(lienTache);
     }
 
     public List<LienTache> getAllLinks() {
-        return (List<LienTache>) lienTacheRepository.findAll();
+        return lienTacheRepository.findAll();
     }
 
     public LienTache findLinkById(Long id) {

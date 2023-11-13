@@ -1,8 +1,7 @@
 package workflow.example.workflow.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +22,7 @@ public class TacheDto implements Serializable {
     private String triggerType;
     private String action;
     private String approbation;
+    private Long workflowId;
 
     private List<LienTacheDto> lienTacheDtos = new ArrayList<>();
     private List<TacheAtraiterDto> tacheAtraiterDtos = new ArrayList<>();

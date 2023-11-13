@@ -25,7 +25,7 @@ public class WorkflowService {
     private final WorkflowConverter workflowConverter;
     @Transactional
     public ResponseEntity<Object> addWorkflow(WorkflowDto workflowDto) {
-        Workflow workflow = workflowConverter.dtoToEntity(workflowDto);
+        var workflow = workflowConverter.dtoToEntity(workflowDto);
         Long id = workflow.getId();
         if (id != null && workflowRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Workflow with id " + id + " already exists");
@@ -55,7 +55,7 @@ public class WorkflowService {
 
     @Transactional
     public ResponseEntity<Object> updateWorkflow(Long id, WorkflowDto workflowDto) {
-        Workflow workflow = workflowConverter.dtoToEntity(workflowDto);
+        var workflow = workflowConverter.dtoToEntity(workflowDto);
         workflowRepository.findById(id).ifPresentOrElse(
                 w -> {
                     w.setName(workflow.getName());

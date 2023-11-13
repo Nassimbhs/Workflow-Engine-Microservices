@@ -156,7 +156,7 @@ public class TacheController {
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<?> assignerTacheAUtilisateurs(@PathVariable("tacheId") Long tacheId,@PathVariable("workflowId") Long workflowId, @RequestBody List<Long> userIds) {
+    public ResponseEntity<Void> assignerTacheAUtilisateurs(@PathVariable("tacheId") Long tacheId,@PathVariable("workflowId") Long workflowId, @RequestBody List<Long> userIds) {
         tacheService.assignerTacheAUtilisateurs(tacheId,userIds,workflowId);
         return ResponseEntity.ok().build();
     }

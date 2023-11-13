@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
+import workflow.example.workflow.converter.TacheConverter;
+import workflow.example.workflow.dto.TacheDto;
 import workflow.example.workflow.entity.GroupeUser;
 import reactor.core.publisher.Mono;
 import workflow.example.workflow.entity.Tache;
@@ -22,13 +24,11 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 public class TacheService {
-    final
-    TacheRepository tacheRepository;
-
+    private final TacheRepository tacheRepository;
     private final TacheAtraiteRepository tacheAtraiteRepository;
     private final WebClient webClient;
     private final UserRepository userRepository;
-
+    private final TacheConverter tacheConverter;
     @Transactional
     public ResponseEntity<Object> addTache(Tache tache) {
         Long id = tache.getId();
@@ -114,6 +114,12 @@ public class TacheService {
         return tacheRepository.findByWorkflowId(id);
     }
 
+    public static class UserAlreadyAssignedException extends RuntimeException {
+        public UserAlreadyAssignedException(String message) {
+            super(message);
+        }
+    }
+
     @Transactional
     public void assignerTacheAUtilisateurs(Long tacheId, List<Long> userIds, Long workflowId) {
         Tache task = tacheRepository.findById(tacheId)
@@ -126,7 +132,7 @@ public class TacheService {
                     .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec l'ID : " + userId));
 
             if (!user.getTaches().isEmpty() && user.getTaches().contains(task)) {
-                throw new RuntimeException("L'utilisateur est déjà assigné à cette tâche");
+                throw new UserAlreadyAssignedException("L'utilisateur est déjà assigné à cette tâche");
             }
 
             usersToAdd.add(user);
@@ -161,7 +167,7 @@ public class TacheService {
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
         if (!task.getUserList().contains(user)) {
-            throw new RuntimeException("L'utilisateur n'est pas assigné à cette tâche.");
+            throw new UserAlreadyAssignedException("L'utilisateur n'est pas assigné à cette tâche.");
         }
 
         task.getUserList().remove(user);

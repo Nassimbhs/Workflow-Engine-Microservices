@@ -1,9 +1,9 @@
 package workflow.example.workflow.converter;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import workflow.example.workflow.dto.WorkflowDto;
+import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.entity.Workflow;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +33,11 @@ public class WorkflowConverter {
         dto.setTacheDtoList(tacheConverter.entityToDto(workflow.getTaches()));
         return dto;
     }
+    public List<WorkflowDto> entityToDto(List<Workflow> workflows)
+    {
+        return workflows.stream().map(this::entityToDto).collect(Collectors.toList());
+    }
+
     public Workflow dtoToEntity(WorkflowDto dto) {
         var entity = new Workflow();
         entity.setId(dto.getId());
@@ -49,11 +54,11 @@ public class WorkflowConverter {
         entity.setPassword(dto.getPassword());
         entity.setTacheAecouter(dto.getTacheAecouter());
         entity.setEvenement(dto.getEvenement());
+        List<Tache> taches = dto.getTacheDtoList().stream()
+                .map(tacheConverter::dtoToEntity)
+                .collect(Collectors.toList());
+        entity.setTaches(taches);
         return entity;
-    }
-    public List<WorkflowDto> entityToDto(List<Workflow> workflows)
-    {
-        return workflows.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 
 }

@@ -28,7 +28,7 @@ public class TacheAtraiteService {
 
     @Transactional
     public ResponseEntity<Object> marquerTacheCommeTraite(Long id, TacheAtraiterDto tacheAtraiterDto) {
-        TacheAtraiter tacheAtraiter = tacheAtraiterConverter.dtoToEntity(tacheAtraiterDto);
+        var tacheAtraiter = tacheAtraiterConverter.dtoToEntity(tacheAtraiterDto);
         tacheAtraiteRepository.findById(id).ifPresentOrElse(
                 a -> {
                     a.setStatut("traité");
@@ -48,7 +48,7 @@ public class TacheAtraiteService {
 
     @Transactional
     public ResponseEntity<Object> rejeterTache(Long id, TacheAtraiterDto tacheAtraiterDto) {
-        TacheAtraiter tacheAtraiter = tacheAtraiterConverter.dtoToEntity(tacheAtraiterDto);
+        var tacheAtraiter = tacheAtraiterConverter.dtoToEntity(tacheAtraiterDto);
         tacheAtraiteRepository.findById(id).ifPresentOrElse(
                 a -> {
                     a.setStatut("traité");
