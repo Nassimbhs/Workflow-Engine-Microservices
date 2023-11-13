@@ -34,14 +34,14 @@ public class LienTacheController {
                     @ApiResponse(
                             description = "Success",
                             responseCode = "200",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = LienTache.class))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = LienTacheDto.class))
                     ),
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<Object> addlink(@RequestBody LienTache lienTache){
-        return lienTacheService.addLink(lienTache);
+    public ResponseEntity<Object> addlink(@RequestBody LienTacheDto lienTacheDto){
+        return lienTacheService.addLink(lienTacheDto);
     }
 
     @PutMapping("/update/{id}")
@@ -53,14 +53,14 @@ public class LienTacheController {
                     @ApiResponse(
                             description = "Success",
                             responseCode = "200",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = LienTache.class))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = LienTacheDto.class))
                     ),
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<Object> updateLink(@PathVariable Long id, @RequestBody LienTache lienTache) {
-        return  lienTacheService.updateLink(id,lienTache);
+    public ResponseEntity<Object> updateLink(@PathVariable Long id, @RequestBody LienTacheDto lienTacheDto) {
+        return  lienTacheService.updateLink(id,lienTacheDto);
     }
 
     @DeleteMapping("/delete/{id}")

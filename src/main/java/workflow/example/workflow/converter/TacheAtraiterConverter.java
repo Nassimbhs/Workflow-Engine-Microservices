@@ -1,7 +1,9 @@
 package workflow.example.workflow.converter;
 
 import org.springframework.stereotype.Component;
+import workflow.example.workflow.dto.LienTacheDto;
 import workflow.example.workflow.dto.TacheAtraiterDto;
+import workflow.example.workflow.entity.LienTache;
 import workflow.example.workflow.entity.TacheAtraiter;
 
 import java.util.List;
@@ -25,7 +27,22 @@ public class TacheAtraiterConverter {
         dto.setCreationDate(tacheAtraiter.getCreationDate());
         return dto;
     }
-
+    public TacheAtraiter dtoToEntity(TacheAtraiterDto dto) {
+        var entity = new TacheAtraiter();
+        entity.setId(dto.getId());
+        entity.setResponsable(dto.getResponsable());
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setEndDate(dto.getEndDate());
+        entity.setStatut(dto.getStatut());
+        entity.setAction(dto.getAction());
+        entity.setWorkflowId(dto.getWorkflowId());
+        entity.setEmailResponsable(dto.getEmailResponsable());
+        entity.setApprobation(dto.getApprobation());
+        entity.setResponsable(dto.getResponsable());
+        entity.setCreationDate(dto.getCreationDate());
+        return entity;
+    }
     public List<TacheAtraiterDto> entityToDto(List<TacheAtraiter> tacheAtraiters) {
         return tacheAtraiters.stream().map(this::entityToDto).collect(Collectors.toList());
     }

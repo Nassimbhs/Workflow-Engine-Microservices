@@ -5,12 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import workflow.example.workflow.converter.LienTacheConverter;
 import workflow.example.workflow.dto.LienTacheDto;
 import workflow.example.workflow.entity.LienTache;
 import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.repository.LienTacheRepository;
 import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.repository.WorkflowRepository;
+
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +28,12 @@ public class LienTacheService {
     private TacheRepository tacheRepository;
     @Autowired
     private WorkflowRepository workflowRepository;
+    @Autowired
+    private LienTacheConverter lienTacheConverter;
 
     @Transactional
-    public ResponseEntity<Object> addLink(LienTache lienTache) {
+    public ResponseEntity<Object> addLink(LienTacheDto lienTacheDto) {
+        LienTache lienTache = lienTacheConverter.dtoToEntity(lienTacheDto);
         Optional<Tache> tache = tacheRepository.findById(lienTache.getId());
         if (tache.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "activity with id " + lienTache.getId() + " not found");
@@ -36,7 +41,7 @@ public class LienTacheService {
         lienTache.setTacheLien(tache.get());
 
         lienTacheRepository.save(lienTache);
-        var lienTacheDTO = new LienTacheDto();
+        LienTacheDto lienTacheDTO = new LienTacheDto();
         lienTacheDTO.setId(lienTache.getId());
         lienTacheDTO.setSource(lienTache.getSource());
         lienTacheDTO.setTarget(lienTache.getTarget());
@@ -51,7 +56,8 @@ public class LienTacheService {
 
     }
     @Transactional
-    public ResponseEntity<Object> updateLink(Long id, LienTache lienTache) {
+    public ResponseEntity<Object> updateLink(Long id, LienTacheDto lienTacheDto) {
+        LienTache lienTache = lienTacheConverter.dtoToEntity(lienTacheDto);
         lienTacheRepository.findById(id).ifPresentOrElse(
                 a -> {
                     a.setSource(lienTache.getSource());
@@ -77,7 +83,7 @@ public class LienTacheService {
     }
 
     public List<LienTache> getAllLinks() {
-        return lienTacheRepository.findAll();
+        return (List<LienTache>) lienTacheRepository.findAll();
     }
 
     public LienTache findLinkById(Long id) {

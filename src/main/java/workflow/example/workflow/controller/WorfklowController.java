@@ -36,14 +36,14 @@ public class WorfklowController {
                     @ApiResponse(
                             description = "Success",
                             responseCode = "200",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Workflow.class))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = WorkflowDto.class))
                     ),
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<Object> addWorkflow(@RequestBody Workflow workflow){
-        return workflowService.addWorkflow(workflow);
+    public ResponseEntity<Object> addWorkflow(@RequestBody WorkflowDto workflowDto){
+        return workflowService.addWorkflow(workflowDto);
     }
 
     @PutMapping("/update/{id}")
@@ -55,14 +55,14 @@ public class WorfklowController {
                     @ApiResponse(
                             description = "Success",
                             responseCode = "200",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Workflow.class))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = WorkflowDto.class))
                     ),
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<Object> updateWorkflow(@PathVariable Long id,@RequestBody Workflow workflow) {
-        return  workflowService.updateWorkflow(id,workflow);
+    public ResponseEntity<Object> updateWorkflow(@PathVariable Long id,@RequestBody WorkflowDto workflowDto) {
+        return  workflowService.updateWorkflow(id,workflowDto);
     }
 
     @DeleteMapping("/delete/{id}")

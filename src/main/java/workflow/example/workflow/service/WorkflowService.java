@@ -1,11 +1,13 @@
 package workflow.example.workflow.service;
 
 import javassist.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import workflow.example.workflow.converter.WorkflowConverter;
+import workflow.example.workflow.dto.WorkflowDto;
 import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.entity.Workflow;
 import workflow.example.workflow.repository.TacheRepository;
@@ -14,26 +16,16 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class WorkflowService {
 
     private final WorkflowRepository workflowRepository;
     private final TacheRepository tacheRepository;
-    private TableService tableService;
-
-    public WorkflowService(WorkflowRepository workflowRepository, TacheRepository tacheRepository) {
-        this.workflowRepository = workflowRepository;
-        this.tacheRepository = tacheRepository;
-    }
-
-    @Autowired
-    public WorkflowService(WorkflowRepository workflowRepository, TacheRepository tacheRepository, TableService tableService) {
-        this.workflowRepository = workflowRepository;
-        this.tacheRepository = tacheRepository;
-        this.tableService = tableService;
-    }
-
+    private final TableService tableService;
+    private final WorkflowConverter workflowConverter;
     @Transactional
-    public ResponseEntity<Object> addWorkflow(Workflow workflow) {
+    public ResponseEntity<Object> addWorkflow(WorkflowDto workflowDto) {
+        Workflow workflow = workflowConverter.dtoToEntity(workflowDto);
         Long id = workflow.getId();
         if (id != null && workflowRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Workflow with id " + id + " already exists");
@@ -62,7 +54,8 @@ public class WorkflowService {
     }
 
     @Transactional
-    public ResponseEntity<Object> updateWorkflow(Long id, Workflow workflow) {
+    public ResponseEntity<Object> updateWorkflow(Long id, WorkflowDto workflowDto) {
+        Workflow workflow = workflowConverter.dtoToEntity(workflowDto);
         workflowRepository.findById(id).ifPresentOrElse(
                 w -> {
                     w.setName(workflow.getName());

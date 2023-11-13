@@ -32,6 +32,7 @@ public class TacheConverter {
         dto.setTacheAtraiterDtos(tacheAtraiterConverter.entityToDto(tache.getTacheAtraiters()));
         return dto;
     }
+
     public List<TacheDto> entityToDto(List<Tache> taches)
     {
         return taches.stream().map(this::entityToDto).collect(Collectors.toList());

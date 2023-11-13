@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import workflow.example.workflow.converter.TacheAtraiterConverter;
+import workflow.example.workflow.dto.TacheAtraiterDto;
 import workflow.example.workflow.entity.TacheAtraiter;
 import workflow.example.workflow.repository.TacheAtraiteRepository;
 import javax.transaction.Transactional;
@@ -16,9 +18,10 @@ import java.util.Optional;
 public class TacheAtraiteService {
 
     private final TacheAtraiteRepository tacheAtraiteRepository;
-
-    public TacheAtraiteService(TacheAtraiteRepository tacheAtraiteRepository) {
+    private final TacheAtraiterConverter tacheAtraiterConverter;
+    public TacheAtraiteService(TacheAtraiteRepository tacheAtraiteRepository, TacheAtraiterConverter tacheAtraiterConverter) {
         this.tacheAtraiteRepository = tacheAtraiteRepository;
+        this.tacheAtraiterConverter = tacheAtraiterConverter;
     }
 
     public List<TacheAtraiter> getTacheAtraiterByResponsable(Long responsableId) {
@@ -26,7 +29,8 @@ public class TacheAtraiteService {
     }
 
     @Transactional
-    public ResponseEntity<Object> marquerTacheCommeTraite(Long id, TacheAtraiter tacheAtraiter) {
+    public ResponseEntity<Object> marquerTacheCommeTraite(Long id, TacheAtraiterDto tacheAtraiterDto) {
+        TacheAtraiter tacheAtraiter = tacheAtraiterConverter.dtoToEntity(tacheAtraiterDto);
         tacheAtraiteRepository.findById(id).ifPresentOrElse(
                 a -> {
                     a.setStatut("traité");
@@ -45,7 +49,8 @@ public class TacheAtraiteService {
     }
 
     @Transactional
-    public ResponseEntity<Object> rejeterTache(Long id, TacheAtraiter tacheAtraiter) {
+    public ResponseEntity<Object> rejeterTache(Long id, TacheAtraiterDto tacheAtraiterDto) {
+        TacheAtraiter tacheAtraiter = tacheAtraiterConverter.dtoToEntity(tacheAtraiterDto);
         tacheAtraiteRepository.findById(id).ifPresentOrElse(
                 a -> {
                     a.setStatut("traité");

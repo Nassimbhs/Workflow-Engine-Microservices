@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +17,15 @@ import workflow.example.workflow.service.TacheAtraiteService;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/TacheAtraiter")
 @Tag(name = "TacheAtraiter", description = "CRUD TacheAtraiter")
 @CrossOrigin(origins = "http://localhost:4200")
 public class TacheAtraiterController {
 
-    @Autowired
-    private TacheAtraiteService tacheAtraiteService;
-    @Autowired
-    private TacheAtraiterConverter tacheAtraiterConverter;
+    private final TacheAtraiteService tacheAtraiteService;
+    private final TacheAtraiterConverter tacheAtraiterConverter;
+
     @GetMapping("/responsable/{responsableId}")
     @Operation(
             summary = "Find TacheAtraiter by user id",
@@ -54,18 +55,18 @@ public class TacheAtraiterController {
                     @ApiResponse(
                             description = "Success",
                             responseCode = "200",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TacheAtraiter.class))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TacheAtraiterDto.class))
                     ),
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<Object> updateTache(@PathVariable Long id, @RequestBody TacheAtraiter tacheAtraiter) {
-        return tacheAtraiteService.marquerTacheCommeTraite(id, tacheAtraiter);
+    public ResponseEntity<Object> updateTache(@PathVariable Long id, @RequestBody TacheAtraiterDto tacheAtraiterDto) {
+        return tacheAtraiteService.marquerTacheCommeTraite(id, tacheAtraiterDto);
     }
     @PutMapping("/rejeter/{id}")
-    public ResponseEntity<Object> rejeterTache(@PathVariable Long id, @RequestBody TacheAtraiter tacheAtraiter) {
-        return tacheAtraiteService.rejeterTache(id, tacheAtraiter);
+    public ResponseEntity<Object> rejeterTache(@PathVariable Long id, @RequestBody TacheAtraiterDto tacheAtraiterDto) {
+        return tacheAtraiteService.rejeterTache(id, tacheAtraiterDto);
     }
 
     @GetMapping("/allTacheAtraiter/")
