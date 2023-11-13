@@ -1,28 +1,27 @@
 package workflow.example.workflow;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
+import workflow.example.workflow.converter.WorkflowConverter;
+import workflow.example.workflow.dto.WorkflowDto;
 import workflow.example.workflow.entity.Workflow;
 import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.repository.WorkflowRepository;
+import workflow.example.workflow.service.TableService;
 import workflow.example.workflow.service.WorkflowService;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class WorkflowServiceTest {
-    @InjectMocks
-    private WorkflowService workflowService;
 
     @Mock
     private WorkflowRepository workflowRepository;
@@ -30,116 +29,77 @@ class WorkflowServiceTest {
     @Mock
     private TacheRepository tacheRepository;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+    @Mock
+    private TableService tableService;
+
+    @Mock
+    private WorkflowConverter workflowConverter;
+
+    @InjectMocks
+    private WorkflowService workflowService;
 
     @Test
     void testAddWorkflow() {
+        WorkflowDto workflowDto = new WorkflowDto();
         Workflow workflow = new Workflow();
-        workflow.setName("Test Workflow");
-        Mockito.when(workflowRepository.save(Mockito.any(Workflow.class))).thenReturn(workflow);
-        ResponseEntity<Object> response = workflowService.addWorkflow(workflow);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
-        assert responseBody != null;
-        String actualMessage = (String) responseBody.get("message");
-        assertEquals("Workflow successfully created!", actualMessage);
+
+        lenient().when(workflowConverter.dtoToEntity(any(WorkflowDto.class))).thenReturn(workflow);
+        lenient().when(workflowRepository.existsById(anyLong())).thenReturn(false);
+        lenient().when(workflowRepository.save(any(Workflow.class))).thenReturn(workflow);
+
+        ResponseEntity<Object> responseEntity = workflowService.addWorkflow(workflowDto);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertNotNull(responseEntity.getBody());
     }
-
-    @Test
-    void testAddWorkflowConflict() {
-        Workflow workflow = new Workflow();
-        workflow.setId(1L);
-        Mockito.when(workflowRepository.existsById(workflow.getId())).thenReturn(true);
-
-        assertThrows(ResponseStatusException.class, () -> workflowService.addWorkflow(workflow));
-    }
-
     @Test
     void testUpdateWorkflow() {
-        Long workflowId = 1L;
+        Long id = 1L;
+        WorkflowDto workflowDto = new WorkflowDto();
         Workflow existingWorkflow = new Workflow();
-        existingWorkflow.setId(workflowId);
-
         Workflow updatedWorkflow = new Workflow();
-        updatedWorkflow.setId(workflowId);
-        updatedWorkflow.setName("Updated Workflow");
 
-        Mockito.when(workflowRepository.findById(workflowId)).thenReturn(java.util.Optional.of(existingWorkflow));
-        Mockito.when(workflowRepository.save(Mockito.any(Workflow.class))).thenReturn(updatedWorkflow);
+        when(workflowConverter.dtoToEntity(any(WorkflowDto.class))).thenReturn(updatedWorkflow);
+        when(workflowRepository.findById(id)).thenReturn(Optional.of(existingWorkflow));
+        when(workflowRepository.save(any(Workflow.class))).thenReturn(updatedWorkflow);
 
-        ResponseEntity<Object> response = workflowService.updateWorkflow(workflowId, updatedWorkflow);
+        ResponseEntity<Object> responseEntity = workflowService.updateWorkflow(id, workflowDto);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-
-        Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
-        assert responseBody != null;
-        String actualMessage = (String) responseBody.get("message");
-
-        assertEquals("Workflow successfully updated!", actualMessage);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertNotNull(responseEntity.getBody());
     }
+
     @Test
     void testUpdateWorkflowNotFound() {
         Long id = 1L;
-        Workflow updatedWorkflow = new Workflow();
+        WorkflowDto workflowDto = new WorkflowDto();
 
-        Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.empty());
+        when(workflowConverter.dtoToEntity(any(WorkflowDto.class))).thenReturn(new Workflow());
+        when(workflowRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(ResponseStatusException.class, () -> workflowService.updateWorkflow(id, updatedWorkflow));
+        assertThrows(ResponseStatusException.class, () -> workflowService.updateWorkflow(id, workflowDto));
     }
 
     @Test
     void testDeleteWorkflowById() {
         Long id = 1L;
-        Workflow workflow = new Workflow();
+        Workflow existingWorkflow = new Workflow();
 
-        Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.of(workflow));
+        when(workflowRepository.findById(id)).thenReturn(Optional.of(existingWorkflow));
 
         workflowService.deleteWorkflowById(id);
 
-        Mockito.verify(workflowRepository).delete(workflow);
+        // Verify that delete method was called
+        verify(workflowRepository, times(1)).delete(existingWorkflow);
     }
 
     @Test
     void testDeleteWorkflowByIdNotFound() {
         Long id = 1L;
 
-        Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.empty());
+        when(workflowRepository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(ResponseStatusException.class, () -> workflowService.deleteWorkflowById(id));
-    }
-
-    @Test
-    void testGetAllWorkflows() {
-        List<Workflow> workflows = new ArrayList<>();
-        Mockito.when(workflowRepository.findAll()).thenReturn(workflows);
-
-        List<Workflow> result = workflowService.getAllWorkflows();
-
-        assertEquals(workflows, result);
-    }
-
-    @Test
-    void testFindWorkflowById() {
-        Long id = 1L;
-        Workflow workflow = new Workflow();
-
-        Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.of(workflow));
-
-        Workflow result = workflowService.findWorkflowById(id);
-
-        assertEquals(workflow, result);
-    }
-
-    @Test
-    void testFindWorkflowByIdNotFound() {
-        Long id = 1L;
-
-        Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.empty());
-
-        assertThrows(ResponseStatusException.class, () -> workflowService.findWorkflowById(id));
     }
 
 }

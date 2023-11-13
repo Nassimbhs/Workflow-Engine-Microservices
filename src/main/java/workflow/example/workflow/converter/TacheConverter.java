@@ -1,5 +1,6 @@
 package workflow.example.workflow.converter;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import workflow.example.workflow.dto.TacheDto;
 import workflow.example.workflow.entity.Tache;
@@ -7,15 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class TacheConverter {
     private final LienTacheConverter lienTacheConverter;
 
     private final TacheAtraiterConverter tacheAtraiterConverter;
 
-    public TacheConverter(LienTacheConverter lienTacheConverter, TacheAtraiterConverter tacheAtraiterConverter) {
-        this.lienTacheConverter = lienTacheConverter;
-        this.tacheAtraiterConverter = tacheAtraiterConverter;
-    }
 
     public TacheDto entityToDto(Tache tache){
         var dto = new TacheDto();

@@ -1,5 +1,6 @@
 package workflow.example.workflow.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,11 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TacheAtraiteService {
 
     private final TacheAtraiteRepository tacheAtraiteRepository;
     private final TacheAtraiterConverter tacheAtraiterConverter;
-    public TacheAtraiteService(TacheAtraiteRepository tacheAtraiteRepository, TacheAtraiterConverter tacheAtraiterConverter) {
-        this.tacheAtraiteRepository = tacheAtraiteRepository;
-        this.tacheAtraiterConverter = tacheAtraiterConverter;
-    }
 
     public List<TacheAtraiter> getTacheAtraiterByResponsable(Long responsableId) {
         return tacheAtraiteRepository.findByResponsable(responsableId);

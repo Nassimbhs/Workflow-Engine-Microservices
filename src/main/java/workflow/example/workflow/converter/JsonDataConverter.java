@@ -3,7 +3,6 @@ package workflow.example.workflow.converter;
 import org.springframework.stereotype.Component;
 import workflow.example.workflow.dto.JsonDataDto;
 import workflow.example.workflow.entity.JsonData;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

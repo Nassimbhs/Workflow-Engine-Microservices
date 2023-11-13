@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javassist.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +18,15 @@ import workflow.example.workflow.service.WorkflowService;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/Workflow")
 @Tag(name = "Workflow", description = "CRUD Workflow")
 @CrossOrigin(origins = "http://localhost:4200")
 public class WorfklowController {
 
-    @Autowired
-    private WorkflowConverter workflowConverter;
-    @Autowired
-    private WorkflowService workflowService;
+    private final WorkflowConverter workflowConverter;
+    private final WorkflowService workflowService;
+
 
     @PostMapping("/addWorkflow")
     @Operation(

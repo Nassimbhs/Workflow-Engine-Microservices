@@ -1,19 +1,15 @@
 package workflow.example.workflow.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TableService {
-
     private final JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    public TableService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     public List<String> getTables(String sgbd) {
         String query;

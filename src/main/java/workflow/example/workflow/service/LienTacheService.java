@@ -1,5 +1,6 @@
 package workflow.example.workflow.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,6 @@ import workflow.example.workflow.entity.LienTache;
 import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.repository.LienTacheRepository;
 import workflow.example.workflow.repository.TacheRepository;
-import workflow.example.workflow.repository.WorkflowRepository;
-
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
@@ -20,16 +19,12 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class LienTacheService {
 
-    @Autowired
-    private LienTacheRepository lienTacheRepository;
-    @Autowired
-    private TacheRepository tacheRepository;
-    @Autowired
-    private WorkflowRepository workflowRepository;
-    @Autowired
-    private LienTacheConverter lienTacheConverter;
+    private final LienTacheRepository lienTacheRepository;
+    private final TacheRepository tacheRepository;
+    private final LienTacheConverter lienTacheConverter;
 
     @Transactional
     public ResponseEntity<Object> addLink(LienTacheDto lienTacheDto) {

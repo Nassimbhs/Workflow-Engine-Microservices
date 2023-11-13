@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import workflow.example.workflow.converter.TacheConverter;
@@ -13,25 +13,19 @@ import workflow.example.workflow.converter.UserConverter;
 import workflow.example.workflow.dto.TacheDto;
 import workflow.example.workflow.dto.UserDto;
 import workflow.example.workflow.entity.Tache;
-import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.service.TacheService;
-
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/Tache")
 @Tag(name = "Tache", description = "CRUD Tache")
 @CrossOrigin(origins = "http://localhost:4200")
 public class TacheController {
 
-    @Autowired
-    private TacheService tacheService;
-    @Autowired
-    private TacheConverter tacheConverter;
-    @Autowired
-    private UserConverter userConverter;
-    @Autowired
-    private TacheRepository tacheRepository;
+    private final TacheService tacheService;
+    private final TacheConverter tacheConverter;
+    private final UserConverter userConverter;
 
     @PostMapping("/addTache")
     @Operation(

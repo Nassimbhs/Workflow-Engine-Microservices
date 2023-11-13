@@ -3,7 +3,6 @@ package workflow.example.workflow.converter;
 import org.springframework.stereotype.Component;
 import workflow.example.workflow.dto.GroupeUserDto;
 import workflow.example.workflow.entity.GroupeUser;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
