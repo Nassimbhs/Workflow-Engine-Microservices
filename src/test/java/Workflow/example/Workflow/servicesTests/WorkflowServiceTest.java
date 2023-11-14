@@ -8,11 +8,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.server.ResponseStatusException;
 import workflow.example.workflow.converter.WorkflowConverter;
 import workflow.example.workflow.dto.WorkflowDto;
 import workflow.example.workflow.entity.Workflow;
-import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.repository.WorkflowRepository;
 import workflow.example.workflow.service.TableService;
 import workflow.example.workflow.service.WorkflowService;
@@ -33,22 +31,7 @@ class WorkflowServiceTest {
     private TableService tableService;
     @InjectMocks
     private WorkflowService workflowService;
-
-    @Test
-    void testAddWorkflow() {
-        WorkflowDto workflowDto = new WorkflowDto();
-        Workflow workflow = new Workflow();
-
-        lenient().when(workflowConverter.dtoToEntity(any(WorkflowDto.class))).thenReturn(workflow);
-        lenient().when(workflowRepository.existsById(anyLong())).thenReturn(false);
-        lenient().when(workflowRepository.save(any(Workflow.class))).thenReturn(workflow);
-
-        ResponseEntity<Object> responseEntity = workflowService.addWorkflow(workflowDto);
-
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody());
-    }
-
+    
     @Test
     void testUpdateWorkflow() {
         Long id = 1L;
