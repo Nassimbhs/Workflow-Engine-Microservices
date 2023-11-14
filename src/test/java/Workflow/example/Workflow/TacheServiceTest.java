@@ -14,8 +14,12 @@ import workflow.example.workflow.entity.User;
 import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.repository.UserRepository;
 import workflow.example.workflow.service.TacheService;
+
+import java.util.Collections;
 import java.util.Optional;
-import static org.mockito.Mockito.when;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TacheServiceTest {
@@ -67,4 +71,21 @@ class TacheServiceTest {
         Assertions.assertTrue(task.getUserList().isEmpty());
     }
 
+    @Test
+    void testDeleteTacheById() {
+        Long id = 1L;
+        Tache existingTache = new Tache();
+        when(tacheRepository.findById(id)).thenReturn(java.util.Optional.of(existingTache));
+
+        tacheService.deleteTacheById(id);
+
+        verify(tacheRepository, times(1)).delete(existingTache);
+    }
+
+    @Test
+    void testGetAllTaches() {
+        when(tacheRepository.findAll()).thenReturn(Collections.emptyList());
+
+        Assertions.assertEquals(Collections.emptyList(), tacheService.getAlltaches());
+    }
 }

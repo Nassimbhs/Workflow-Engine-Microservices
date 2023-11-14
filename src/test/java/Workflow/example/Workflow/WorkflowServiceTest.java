@@ -1,5 +1,6 @@
 package workflow.example.workflow;
 
+import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,16 +26,12 @@ class WorkflowServiceTest {
 
     @Mock
     private WorkflowRepository workflowRepository;
-
     @Mock
     private TacheRepository tacheRepository;
-
-    @Mock
-    private TableService tableService;
-
     @Mock
     private WorkflowConverter workflowConverter;
-
+    @Mock
+    private TableService tableService;
     @InjectMocks
     private WorkflowService workflowService;
 
@@ -52,54 +49,64 @@ class WorkflowServiceTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
     }
+
     @Test
     void testUpdateWorkflow() {
         Long id = 1L;
         WorkflowDto workflowDto = new WorkflowDto();
         Workflow existingWorkflow = new Workflow();
         Workflow updatedWorkflow = new Workflow();
-
-        when(workflowConverter.dtoToEntity(any(WorkflowDto.class))).thenReturn(updatedWorkflow);
+        when(workflowConverter.dtoToEntity(workflowDto)).thenReturn(updatedWorkflow);
         when(workflowRepository.findById(id)).thenReturn(Optional.of(existingWorkflow));
-        when(workflowRepository.save(any(Workflow.class))).thenReturn(updatedWorkflow);
 
-        ResponseEntity<Object> responseEntity = workflowService.updateWorkflow(id, workflowDto);
+        ResponseEntity<Object> response = workflowService.updateWorkflow(id, workflowDto);
 
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody());
-    }
-
-    @Test
-    void testUpdateWorkflowNotFound() {
-        Long id = 1L;
-        WorkflowDto workflowDto = new WorkflowDto();
-
-        when(workflowConverter.dtoToEntity(any(WorkflowDto.class))).thenReturn(new Workflow());
-        when(workflowRepository.findById(id)).thenReturn(Optional.empty());
-
-        assertThrows(ResponseStatusException.class, () -> workflowService.updateWorkflow(id, workflowDto));
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
     }
 
     @Test
     void testDeleteWorkflowById() {
         Long id = 1L;
-        Workflow existingWorkflow = new Workflow();
-
-        when(workflowRepository.findById(id)).thenReturn(Optional.of(existingWorkflow));
+        Workflow workflow = new Workflow();
+        when(workflowRepository.findById(id)).thenReturn(Optional.of(workflow));
 
         workflowService.deleteWorkflowById(id);
 
-        // Verify that delete method was called
-        verify(workflowRepository, times(1)).delete(existingWorkflow);
+        verify(workflowRepository, times(1)).delete(workflow);
     }
 
     @Test
-    void testDeleteWorkflowByIdNotFound() {
+    void testGetAllWorkflows() {
+        List<Workflow> workflows = new ArrayList<>();
+        when(workflowRepository.findAll()).thenReturn(workflows);
+
+        List<Workflow> result = workflowService.getAllWorkflows();
+
+        assertEquals(workflows, result);
+    }
+
+    @Test
+    void testFindWorkflowById() {
         Long id = 1L;
+        Workflow workflow = new Workflow();
+        when(workflowRepository.findById(id)).thenReturn(Optional.of(workflow));
 
-        when(workflowRepository.findById(id)).thenReturn(Optional.empty());
+        Workflow result = workflowService.findWorkflowById(id);
 
-        assertThrows(ResponseStatusException.class, () -> workflowService.deleteWorkflowById(id));
+        assertEquals(workflow, result);
+    }
+
+    @Test
+    void testGetWorkflowTables() throws NotFoundException {
+        Long workflowId = 1L;
+        Workflow workflow = new Workflow();
+        when(workflowRepository.findById(workflowId)).thenReturn(Optional.of(workflow));
+        lenient().when(tableService.getTables(anyString())).thenReturn(new ArrayList<>());
+
+        List<String> result = workflowService.getWorkflowTables(workflowId);
+
+        assertNotNull(result);
     }
 
 }

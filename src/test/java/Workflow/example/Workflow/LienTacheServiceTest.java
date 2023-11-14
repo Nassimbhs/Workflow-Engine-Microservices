@@ -10,9 +10,12 @@ import org.springframework.http.ResponseEntity;
 import workflow.example.workflow.converter.LienTacheConverter;
 import workflow.example.workflow.dto.LienTacheDto;
 import workflow.example.workflow.entity.LienTache;
+import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.repository.LienTacheRepository;
 import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.service.LienTacheService;
+
+import java.util.ArrayList;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -31,6 +34,7 @@ class LienTacheServiceTest {
 
     @InjectMocks
     private LienTacheService lienTacheService;
+
 
     @Test
     void testUpdateLink() {
@@ -59,4 +63,25 @@ class LienTacheServiceTest {
         verify(lienTacheRepository).delete(existingLienTache);
     }
 
+    @Test
+    void testGetAllLinks() {
+        when(lienTacheRepository.findAll()).thenReturn(new ArrayList<>());
+        assertEquals(new ArrayList<>(), lienTacheService.getAllLinks());
+    }
+
+    @Test
+    void testFindByTacheIdWithTacheLiee() {
+        Long activiteId = 1L;
+        when(lienTacheRepository.findByTacheIdWithTacheLiee(activiteId)).thenReturn(new ArrayList<>());
+
+        assertEquals(new ArrayList<>(), lienTacheService.findByTacheIdWithTacheLiee(activiteId));
+    }
+
+    @Test
+    void testFindByWorkflowId() {
+        String workflowId = "workflowId";
+        when(lienTacheRepository.findByWorkflowId(workflowId)).thenReturn(new ArrayList<>());
+
+        assertEquals(new ArrayList<>(), lienTacheService.findByWorkflowId(workflowId));
+    }
 }
