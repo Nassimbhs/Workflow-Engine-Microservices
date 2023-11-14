@@ -31,7 +31,7 @@ class WorkflowServiceTest {
     private TableService tableService;
     @InjectMocks
     private WorkflowService workflowService;
-    
+
     @Test
     void testUpdateWorkflow() {
         Long id = 1L;
