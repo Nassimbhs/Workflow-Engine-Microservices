@@ -11,7 +11,7 @@ import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 class TacheEntityTest {
-    
+
     @Test
     void testTacheWorkflowRelationship() {
         Tache tache = new Tache();
