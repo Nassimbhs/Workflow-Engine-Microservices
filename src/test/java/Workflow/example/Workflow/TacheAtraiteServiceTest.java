@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 import workflow.example.workflow.converter.TacheAtraiterConverter;
 import workflow.example.workflow.dto.TacheAtraiterDto;
 import workflow.example.workflow.entity.TacheAtraiter;
@@ -52,7 +53,23 @@ class TacheAtraiteServiceTest {
         ResponseEntity<Object> response = tacheAtraiteService.marquerTacheCommeTraite(id, tacheAtraiterDto);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
+
     }
+
+    @Test
+    void testMarquerTacheCommeTraiteTaskNotFound() {
+        Long id = 1L;
+        TacheAtraiterDto tacheAtraiterDto = new TacheAtraiterDto();
+
+        when(tacheAtraiteRepository.findById(id)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            tacheAtraiteService.marquerTacheCommeTraite(id, tacheAtraiterDto);
+        });
+
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
     @Test
     void testRejeterTache() {
         Long id = 1L;
@@ -66,6 +83,20 @@ class TacheAtraiteServiceTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
+    }
+
+    @Test
+    void testRejeterTacheTaskNotFound() {
+        Long id = 1L;
+        TacheAtraiterDto tacheAtraiterDto = new TacheAtraiterDto();
+
+        when(tacheAtraiteRepository.findById(id)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            tacheAtraiteService.rejeterTache(id, tacheAtraiterDto);
+        });
+
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
     @Test
@@ -113,6 +144,12 @@ class TacheAtraiteServiceTest {
         List<TacheAtraiter> actualTaches = tacheAtraiteService.findByWorkflowId(workflowId);
 
         assertEquals(expectedTaches, actualTaches);
+
+        when(tacheAtraiteRepository.findByWorkflowId(workflowId)).thenReturn(Collections.emptyList());
+
+        List<TacheAtraiter> emptyList = tacheAtraiteService.findByWorkflowId(workflowId);
+
+        assertTrue(emptyList.isEmpty());
     }
 
     @Test

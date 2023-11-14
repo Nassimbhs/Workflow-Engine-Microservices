@@ -2,8 +2,6 @@ package workflow.example.workflow.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import workflow.example.workflow.duplication.TacheAtraiterCommon;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TacheAtraiter implements TacheAtraiterCommon {
+public class TacheAtraiter implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

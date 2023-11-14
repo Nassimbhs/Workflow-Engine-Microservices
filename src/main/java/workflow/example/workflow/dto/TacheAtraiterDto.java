@@ -3,13 +3,13 @@ package workflow.example.workflow.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import workflow.example.workflow.duplication.TacheAtraiterCommon;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TacheAtraiterDto implements TacheAtraiterCommon {
+public class TacheAtraiterDto implements Serializable {
 
     private Long id;
     private String name;

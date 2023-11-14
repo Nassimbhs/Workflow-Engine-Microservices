@@ -11,5 +11,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class InteretDto implements Serializable {
     private Long id;
-    private String interet;
+    private String nom;
 }
