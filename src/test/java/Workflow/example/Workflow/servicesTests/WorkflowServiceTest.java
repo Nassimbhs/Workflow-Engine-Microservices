@@ -26,8 +26,7 @@ class WorkflowServiceTest {
 
     @Mock
     private WorkflowRepository workflowRepository;
-    @Mock
-    private TacheRepository tacheRepository;
+
     @Mock
     private WorkflowConverter workflowConverter;
     @Mock

@@ -7,10 +7,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Entity
 public class Conge implements Serializable {
 
