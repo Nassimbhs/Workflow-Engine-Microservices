@@ -1,4 +1,4 @@
-package workflow.example.workflow;
+package workflow.example.workflow.servicesTests;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

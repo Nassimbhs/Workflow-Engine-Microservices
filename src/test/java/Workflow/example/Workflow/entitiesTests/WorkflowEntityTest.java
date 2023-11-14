@@ -1,4 +1,4 @@
-package workflow.example.workflow;
+package workflow.example.workflow.entitiesTests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -6,13 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.entity.Workflow;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class WorkflowEntityTest {
