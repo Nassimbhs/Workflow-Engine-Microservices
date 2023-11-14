@@ -8,19 +8,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.entity.User;
-import workflow.example.workflow.repository.TacheAtraiteRepository;
 import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.repository.UserRepository;
 import workflow.example.workflow.service.TacheService;
-import java.util.List;
 import java.util.Optional;
-
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
