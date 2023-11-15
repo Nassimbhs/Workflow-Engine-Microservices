@@ -7,8 +7,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import workflow.example.workflow.converter.TacheConverter;
 import workflow.example.workflow.converter.WorkflowConverter;
+import workflow.example.workflow.dto.LienTacheDto;
+import workflow.example.workflow.dto.TacheAtraiterDto;
 import workflow.example.workflow.dto.WorkflowDto;
-import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.entity.Workflow;
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +54,16 @@ class WorkflowConverterTest {
         return new Workflow();
     }
 
-    private WorkflowDto createSampleWorkflowDto() {
-        return new WorkflowDto();
+    private LienTacheDto createSampleLienTacheDto() {
+        LienTacheDto lienTacheDto = new LienTacheDto();
+        lienTacheDto.setId(1L);
+        return lienTacheDto;
     }
+
+    private TacheAtraiterDto createSampleTacheAtraiterDto() {
+        TacheAtraiterDto tacheAtraiterDto = new TacheAtraiterDto();
+        tacheAtraiterDto.setId(1L);
+        return tacheAtraiterDto;
+    }
+
 }

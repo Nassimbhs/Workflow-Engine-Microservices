@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,9 @@ import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.repository.UserRepository;
 import workflow.example.workflow.service.TacheService;
 
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -87,4 +88,40 @@ class TacheServiceTest {
 
         Assertions.assertEquals(Collections.emptyList(), tacheService.getAlltaches());
     }
+
+    @Test
+    void testFindtacheByIdWhenTacheExists() {
+        Long tacheId = 1L;
+        Tache expectedTache = new Tache();
+        expectedTache.setId(tacheId);
+
+        when(tacheRepository.findById(tacheId)).thenReturn(Optional.of(expectedTache));
+
+        Tache actualTache = tacheService.findtacheById(tacheId);
+
+        Assertions.assertNotNull(actualTache);
+        Assertions.assertEquals(expectedTache, actualTache);
+    }
+
+    @Test
+    void testFindtacheByIdWhenTacheDoesNotExist() {
+        Long tacheId = 1L;
+
+        when(tacheRepository.findById(tacheId)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> tacheService.findtacheById(tacheId));
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        Assertions.assertEquals("Tache not found", exception.getReason());
+    }
+    @Test
+    void testUserAlreadyAssignedException() {
+        String errorMessage = "User is already assigned to this task.";
+
+        TacheService.UserAlreadyAssignedException exception = new TacheService.UserAlreadyAssignedException(errorMessage);
+
+        Assertions.assertEquals(errorMessage, exception.getMessage());
+    }
+    
 }
