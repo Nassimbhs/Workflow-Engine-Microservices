@@ -28,4 +28,37 @@ class TacheAtraiterDtoTest {
         assertNotNull(tacheAtraiterDto.getCreationDate());
 
     }
+
+    @Test
+    void testDataAnnotation() {
+        TacheAtraiterDto tacheAtraiterDto = new TacheAtraiterDto();
+        tacheAtraiterDto.setId(1L);
+        tacheAtraiterDto.setName("Task1");
+        tacheAtraiterDto.setDescription("Description");
+        tacheAtraiterDto.setCreationDate(new Date());
+        tacheAtraiterDto.setStartDate(new Date());
+        tacheAtraiterDto.setEndDate(new Date());
+        tacheAtraiterDto.setStatut("In Progress");
+        tacheAtraiterDto.setAction("Complete");
+        tacheAtraiterDto.setApprobation("Approved");
+        tacheAtraiterDto.setResponsable(2L);
+        tacheAtraiterDto.setEmailResponsable("responsable@example.com");
+        tacheAtraiterDto.setWorkflowId(3L);
+
+        assertNotNull(tacheAtraiterDto.toString());
+        assertEquals(tacheAtraiterDto.hashCode(), tacheAtraiterDto.hashCode());
+        assertNotNull(tacheAtraiterDto.getId());
+        assertNotNull(tacheAtraiterDto.getName());
+        assertNotNull(tacheAtraiterDto.getDescription());
+        assertNotNull(tacheAtraiterDto.getCreationDate());
+        assertNotNull(tacheAtraiterDto.getStartDate());
+        assertNotNull(tacheAtraiterDto.getEndDate());
+        assertNotNull(tacheAtraiterDto.getStatut());
+        assertNotNull(tacheAtraiterDto.getAction());
+        assertNotNull(tacheAtraiterDto.getApprobation());
+        assertNotNull(tacheAtraiterDto.getResponsable());
+        assertNotNull(tacheAtraiterDto.getEmailResponsable());
+        assertNotNull(tacheAtraiterDto.getWorkflowId());
+    }
+
 }

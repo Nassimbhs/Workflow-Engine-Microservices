@@ -1,5 +1,6 @@
 package workflow.example.workflow.dtoTests;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,4 +23,14 @@ class CompetenceDtoTest {
         assertEquals("Java Programming", competenceDto.getNomCompetence());
 
     }
+
+    @Test
+    void testDataAnnotation() {
+        CompetenceDto competenceDto = new CompetenceDto(1L, "Java");
+        Assertions.assertNotNull(competenceDto.toString());
+        assertEquals(competenceDto.hashCode(), competenceDto.hashCode());
+        Assertions.assertNotNull(competenceDto.getId());
+        Assertions.assertNotNull(competenceDto.getNomCompetence());
+    }
+
 }

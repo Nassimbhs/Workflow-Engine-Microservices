@@ -30,4 +30,23 @@ class FormationDtoTest {
         assertNotNull(formationDto.getDateFin());
 
     }
+
+    @Test
+    void testDataAnnotation() {
+        FormationDto formationDto = new FormationDto();
+        formationDto.setId(1L);
+        formationDto.setNomFormation("Computer Science");
+        formationDto.setEtablissement("XYZ University");
+        formationDto.setDateDeb(new Date());
+        formationDto.setDateFin(new Date());
+
+        assertNotNull(formationDto.toString());
+        assertEquals(formationDto.hashCode(), formationDto.hashCode());
+        assertNotNull(formationDto.getId());
+        assertNotNull(formationDto.getNomFormation());
+        assertNotNull(formationDto.getEtablissement());
+        assertNotNull(formationDto.getDateDeb());
+        assertNotNull(formationDto.getDateFin());
+    }
+
 }

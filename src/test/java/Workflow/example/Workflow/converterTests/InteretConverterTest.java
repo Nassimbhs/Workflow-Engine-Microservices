@@ -28,7 +28,7 @@ class InteretConverterTest {
     }
 
     @Test
-    public void testEntityToDtoList() {
+    void testEntityToDtoList() {
         List<Interet> interetList = Collections.singletonList(createSampleInteret());
 
         List<InteretDto> dtoList = interetConverter.entityToDto(interetList);

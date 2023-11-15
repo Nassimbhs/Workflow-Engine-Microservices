@@ -1,5 +1,6 @@
 package workflow.example.workflow.dtoTests;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,5 +25,22 @@ class JsonDataDtoTest {
         assertEquals("Processed", jsonDataDto.getEtat());
 
     }
+
+    @Test
+    void testDataAnnotation() {
+        JsonDataDto jsonDataDto = new JsonDataDto();
+        jsonDataDto.setId(1L);
+        jsonDataDto.setData("Some JSON data");
+        jsonDataDto.setResponsable(2L);
+        jsonDataDto.setEtat("In Progress");
+
+        Assertions.assertNotNull(jsonDataDto.toString());
+        assertEquals(jsonDataDto.hashCode(), jsonDataDto.hashCode());
+        Assertions.assertNotNull(jsonDataDto.getId());
+        Assertions.assertNotNull(jsonDataDto.getData());
+        Assertions.assertNotNull(jsonDataDto.getResponsable());
+        Assertions.assertNotNull(jsonDataDto.getEtat());
+    }
+
 }
 

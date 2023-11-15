@@ -33,4 +33,25 @@ class ExperienceDtoTest {
         assertEquals("Worked on developing new features", experienceDto.getDescription());
 
     }
+
+    @Test
+    void testDataAnnotation() {
+        ExperienceDto experienceDto = new ExperienceDto();
+        experienceDto.setId(1L);
+        experienceDto.setPoste("Software Engineer");
+        experienceDto.setEmployeur("ABC Company");
+        experienceDto.setDateDeb(new Date());
+        experienceDto.setDateFin(new Date());
+        experienceDto.setDescription("Worked on various projects");
+
+        assertNotNull(experienceDto.toString());
+        assertEquals(experienceDto.hashCode(), experienceDto.hashCode());
+        assertNotNull(experienceDto.getId());
+        assertNotNull(experienceDto.getPoste());
+        assertNotNull(experienceDto.getEmployeur());
+        assertNotNull(experienceDto.getDateDeb());
+        assertNotNull(experienceDto.getDateFin());
+        assertNotNull(experienceDto.getDescription());
+    }
+
 }

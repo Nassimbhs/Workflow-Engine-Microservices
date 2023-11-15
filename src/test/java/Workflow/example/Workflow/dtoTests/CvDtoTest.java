@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import workflow.example.workflow.dto.CvDto;
-
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -47,4 +46,34 @@ class CvDtoTest {
         assertNotNull(cvDto.getExperienceDtos());
 
     }
+
+    @Test
+    void testDataAnnotation() {
+        CvDto cvDto = new CvDto();
+        cvDto.setId(1L);
+        cvDto.setPrenom("John");
+        cvDto.setNomFamille("Doe");
+        cvDto.setEmail("john.doe@example.com");
+        cvDto.setTitreProfil("Software Developer");
+        cvDto.setTel(1234567890L);
+        cvDto.setAddresse("123 Main St");
+        cvDto.setVille("City");
+
+        assertNotNull(cvDto.toString());
+        assertEquals(cvDto.hashCode(), cvDto.hashCode());
+        assertNotNull(cvDto.getId());
+        assertNotNull(cvDto.getPrenom());
+        assertNotNull(cvDto.getNomFamille());
+        assertNotNull(cvDto.getEmail());
+        assertNotNull(cvDto.getTitreProfil());
+        assertNotNull(cvDto.getTel());
+        assertNotNull(cvDto.getAddresse());
+        assertNotNull(cvDto.getVille());
+        assertNotNull(cvDto.getFormationDtos());
+        assertNotNull(cvDto.getCompetenceDtos());
+        assertNotNull(cvDto.getLangueDtos());
+        assertNotNull(cvDto.getInteretDtos());
+        assertNotNull(cvDto.getExperienceDtos());
+    }
+
 }

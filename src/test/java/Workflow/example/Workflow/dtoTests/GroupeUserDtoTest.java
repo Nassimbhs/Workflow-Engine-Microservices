@@ -1,5 +1,6 @@
 package workflow.example.workflow.dtoTests;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,5 +25,20 @@ class GroupeUserDtoTest {
         assertEquals("Administrator group", groupeUserDto.getDescription());
 
     }
+
+    @Test
+    void testDataAnnotation() {
+        GroupeUserDto groupeUserDto = new GroupeUserDto();
+        groupeUserDto.setId(1L);
+        groupeUserDto.setNom("Development Team");
+        groupeUserDto.setDescription("Responsible for software development");
+
+        Assertions.assertNotNull(groupeUserDto.toString());
+        assertEquals(groupeUserDto.hashCode(), groupeUserDto.hashCode());
+        Assertions.assertNotNull(groupeUserDto.getId());
+        Assertions.assertNotNull(groupeUserDto.getNom());
+        Assertions.assertNotNull(groupeUserDto.getDescription());
+    }
+
 }
 
