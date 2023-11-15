@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 import workflow.example.workflow.converter.WorkflowConverter;
 import workflow.example.workflow.dto.WorkflowDto;
 import workflow.example.workflow.entity.Workflow;
@@ -89,6 +91,63 @@ class WorkflowServiceTest {
         List<String> result = workflowService.getWorkflowTables(workflowId);
 
         assertNotNull(result);
+    }
+
+    @Test
+    void testUpdateWorkflow_Success() {
+        Long id = 1L;
+        WorkflowDto workflowDto = new WorkflowDto();
+
+        Workflow existingWorkflow = new Workflow();
+        existingWorkflow.setId(id);
+        existingWorkflow.setName("Old Name");
+
+        Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.of(existingWorkflow));
+        Mockito.when(workflowConverter.dtoToEntity(workflowDto)).thenReturn(existingWorkflow);
+
+        ResponseEntity<Object> response = workflowService.updateWorkflow(id, workflowDto);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testUpdateWorkflow_NotFound() {
+        Long id = 1L;
+        WorkflowDto workflowDto = new WorkflowDto();
+
+        Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> workflowService.updateWorkflow(id, workflowDto));
+
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    void testFindWorkflowById_Success() {
+        Long id = 1L;
+
+        Workflow existingWorkflow = new Workflow();
+        existingWorkflow.setId(id);
+        existingWorkflow.setName("Test Workflow");
+
+        Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.of(existingWorkflow));
+
+        Workflow result = workflowService.findWorkflowById(id);
+
+        assertEquals(existingWorkflow, result);
+    }
+
+    @Test
+    void testFindWorkflowById_NotFound() {
+        Long id = 1L;
+
+        Mockito.when(workflowRepository.findById(id)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> workflowService.findWorkflowById(id));
+
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
 }

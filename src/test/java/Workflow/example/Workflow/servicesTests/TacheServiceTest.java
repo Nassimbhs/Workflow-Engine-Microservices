@@ -9,7 +9,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
+import workflow.example.workflow.entity.GroupeUser;
 import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.entity.User;
 import workflow.example.workflow.repository.TacheRepository;
@@ -26,12 +28,13 @@ class TacheServiceTest {
 
     @Mock
     private TacheRepository tacheRepository;
-
     @Mock
     private UserRepository userRepository;
-
+    @Mock
+    private WebClient webClient;
     @InjectMocks
     private TacheService tacheService;
+
 
     @Test
     void addTacheTest() {
@@ -123,5 +126,69 @@ class TacheServiceTest {
 
         Assertions.assertEquals(errorMessage, exception.getMessage());
     }
-    
+
+    @Test
+    void testFindByUserIdtraite() {
+
+        long userId = 1L;
+        List<Tache> expectedTasks = Arrays.asList(
+                new Tache(),
+                new Tache()
+        );
+
+        Mockito.when(tacheRepository.findByUserIdtraite((userId))).thenReturn(expectedTasks);
+
+        List<Tache> actualTasks = tacheService.findByUserIdtraite(userId);
+
+        Assertions.assertEquals(expectedTasks, actualTasks);
+    }
+
+    @Test
+    void testAddTache_ExistingTacheId() {
+        Tache existingTache = new Tache();
+        existingTache.setId(1L);
+
+        when(tacheRepository.existsById(existingTache.getId())).thenReturn(true);
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            tacheService.addTache(existingTache);
+        });
+
+        Assertions.assertEquals(HttpStatus.CONFLICT, exception.getStatus());
+        Assertions.assertEquals("Tache with id " + existingTache.getId() + " already exists", exception.getReason());
+    }
+
+    @Test
+    void testAddTache_NewTacheId() {
+        Tache newTache = new Tache();
+        newTache.setId(2L);
+
+        when(tacheRepository.existsById(newTache.getId())).thenReturn(false);
+
+        ResponseEntity<Object> response = tacheService.addTache(newTache);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertNotNull(response.getBody());
+    }
+
+    @Test
+    void testGetTasksByUser() {
+
+        long userId = 1L;
+        when(tacheRepository.findByUserId(userId)).thenReturn(Arrays.asList(new Tache(), new Tache()));
+
+        List<Tache> tasks = tacheService.getTasksByUser(userId);
+
+        Assertions.assertEquals(2, tasks.size());
+    }
+    @Test
+    void testFindByWorkflowId() {
+        long workflowId = 1L;
+        when(tacheRepository.findByWorkflowId(workflowId)).thenReturn(Arrays.asList(new Tache(), new Tache()));
+
+        List<Tache> tasks = tacheService.findByWorkflowId(workflowId);
+
+        Assertions.assertEquals(2, tasks.size());
+    }
+
 }
