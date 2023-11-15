@@ -1,23 +1,28 @@
 package workflow.example.workflow.converterTests;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
+import workflow.example.workflow.controller.WorfklowController;
 import workflow.example.workflow.converter.*;
 import workflow.example.workflow.dto.CvDto;
-import workflow.example.workflow.entity.Cv;
-import workflow.example.workflow.entity.Competence;
-import workflow.example.workflow.entity.Experience;
-import workflow.example.workflow.entity.Formation;
-import workflow.example.workflow.entity.Interet;
-import workflow.example.workflow.entity.Langue;
+import workflow.example.workflow.dto.WorkflowDto;
+import workflow.example.workflow.entity.*;
+import workflow.example.workflow.service.WorkflowService;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CvConverterTest {
@@ -39,7 +44,12 @@ class CvConverterTest {
 
     @Mock
     private ExperienceConverter experienceConverter;
-
+    @Mock
+    private WorkflowService workflowService;
+    @Mock
+    private WorkflowConverter workflowConverter;
+    @InjectMocks
+    private WorfklowController workflowController;
     @Test
     void testEntityToDto() {
         Cv cv = createSampleCv();
@@ -78,4 +88,57 @@ class CvConverterTest {
         cv.setExperiences(Arrays.asList(new Experience(), new Experience()));
         return cv;
     }
+
+    @Test
+    void testFindEmployeeById() {
+        // Arrange
+        Long workflowId = 1L;
+        WorkflowDto expectedDto = new WorkflowDto();
+        when(workflowService.findWorkflowById(workflowId)).thenReturn(new Workflow());
+        when(workflowConverter.entityToDto(any(Workflow.class))).thenReturn(expectedDto);
+
+        // Act
+        WorkflowDto result = workflowController.findEmployeeById(workflowId);
+
+        // Assert
+        assertEquals(expectedDto, result);
+        verify(workflowService).findWorkflowById(workflowId);
+        verify(workflowConverter).entityToDto(any(Workflow.class));
+    }
+
+    @Test
+    void testFindAll() {
+        List<Workflow> workflows = new ArrayList<>();
+        when(workflowService.getAllWorkflows()).thenReturn(workflows);
+        when(workflowConverter.entityToDto(workflows)).thenReturn(new ArrayList<>());
+
+        List<WorkflowDto> result = workflowController.findAll();
+
+        Assertions.assertNotNull(result);
+        verify(workflowService).getAllWorkflows();
+        verify(workflowConverter).entityToDto(workflows);
+    }
+
+    @Test
+    void testDeleteWorkflow() {
+        Long workflowId = 1L;
+
+        workflowController.deleteWorkflow(workflowId);
+
+        verify(workflowService).deleteWorkflowById(workflowId);
+    }
+
+    @Test
+    void testUpdateWorkflow() {
+        Long workflowId = 1L;
+        WorkflowDto workflowDto = new WorkflowDto();
+        ResponseEntity<Object> expectedResponse = ResponseEntity.ok().build();
+        when(workflowService.updateWorkflow(workflowId, workflowDto)).thenReturn(expectedResponse);
+
+        ResponseEntity<Object> result = workflowController.updateWorkflow(workflowId, workflowDto);
+
+        assertEquals(expectedResponse, result);
+        verify(workflowService).updateWorkflow(workflowId, workflowDto);
+    }
+
 }
