@@ -45,4 +45,38 @@ class FormationEntityTest {
         Assertions.assertEquals(cv, formation.getCv());
     }
 
+    @Test
+    void testToString() {
+        Formation formation = new Formation();
+        formation.setId(1L);
+        formation.setNomFormation("Computer Science");
+        formation.setEtablissement("University XYZ");
+        formation.setDateDeb(new Date());
+        formation.setDateFin(new Date());
+
+        Assertions.assertNotNull(formation.toString());
+    }
+
+    @Test
+    void testEquals() {
+        Formation form1 = new Formation();
+        form1.setId(1L);
+
+        Formation form2 = new Formation();
+        form2.setId(1L);
+
+        Formation form3 = new Formation();
+        form3.setId(2L);
+
+        Assertions.assertEquals(form1, form2);
+        Assertions.assertNotEquals(form1, form3);
+    }
+
+    @Test
+    void testHashCode() {
+        Formation formation = new Formation();
+        formation.setId(1L);
+        Assertions.assertEquals(formation.hashCode(), formation.getClass().hashCode());
+    }
+
 }

@@ -36,4 +36,38 @@ class LangueEntityTest {
 
         Assertions.assertEquals(cv, langue.getCv());
     }
+
+    @Test
+    void testToString() {
+        Langue langue = new Langue();
+        langue.setId(1L);
+        langue.setNom("English");
+        langue.setNiveau("Advanced");
+
+        Assertions.assertNotNull(langue.toString());
+    }
+
+    @Test
+    void testEquals() {
+        Langue lang1 = new Langue();
+        lang1.setId(1L);
+
+        Langue lang2 = new Langue();
+        lang2.setId(1L);
+
+        Langue lang3 = new Langue();
+        lang3.setId(2L);
+
+        Assertions.assertEquals(lang1, lang2);
+        Assertions.assertNotEquals(lang1, lang3);
+    }
+
+    @Test
+    void testHashCode() {
+        Langue langue = new Langue();
+        langue.setId(1L);
+
+        Assertions.assertEquals(langue.hashCode(), langue.getClass().hashCode());
+    }
+
 }

@@ -8,6 +8,7 @@ import workflow.example.workflow.entity.Conge;
 import workflow.example.workflow.entity.Cv;
 import workflow.example.workflow.entity.JsonData;
 import workflow.example.workflow.entity.TacheAtraiter;
+import java.util.Date;
 
 @ExtendWith(MockitoExtension.class)
 class TacheAtraiterEntityTest {
@@ -70,4 +71,42 @@ class TacheAtraiterEntityTest {
 
         Assertions.assertNotEquals(tacheAtraiter1, tacheAtraiter2);
     }
+
+    @Test
+    void testToString() {
+        TacheAtraiter tacheAtraiter = TacheAtraiter.builder()
+                .id(1L)
+                .name("Task1")
+                .description("Description for Task1")
+                .creationDate(new Date())
+                .startDate(new Date())
+                .endDate(new Date())
+                .statut("InProgress")
+                .action("Approve")
+                .approbation("Approved")
+                .responsable(123L)
+                .emailResponsable("responsible@example.com")
+                .workflowId(456L)
+                .build();
+
+        Assertions.assertNotNull(tacheAtraiter.toString());
+    }
+
+    @Test
+    void testEquals() {
+        TacheAtraiter tache1 = TacheAtraiter.builder().id(1L).build();
+        TacheAtraiter tache2 = TacheAtraiter.builder().id(1L).build();
+        TacheAtraiter tache3 = TacheAtraiter.builder().id(2L).build();
+
+        Assertions.assertEquals(tache1, tache2);
+        Assertions.assertNotEquals(tache1, tache3);
+    }
+
+    @Test
+    void testHashCode() {
+        TacheAtraiter tacheAtraiter = TacheAtraiter.builder().id(1L).build();
+
+        Assertions.assertEquals(tacheAtraiter.hashCode(), tacheAtraiter.getClass().hashCode());
+    }
+
 }

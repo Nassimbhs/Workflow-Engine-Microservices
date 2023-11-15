@@ -21,4 +21,20 @@ class EmailRequestEntityTest {
         Assertions.assertEquals("Test Subject", emailRequest.getSubject());
         Assertions.assertEquals("Hello, this is a test email!", emailRequest.getText());
     }
+    @Test
+    void testDataAnnotation() {
+        // Create an instance for testing
+        EmailRequest emailRequest = new EmailRequest();
+        emailRequest.setTo("recipient@example.com");
+        emailRequest.setSubject("Test Subject");
+        emailRequest.setText("Hello, this is a test email.");
+
+        Assertions.assertNotNull(emailRequest.toString());
+        Assertions.assertEquals(emailRequest, emailRequest);
+        Assertions.assertEquals(emailRequest.hashCode(), emailRequest.hashCode());
+        Assertions.assertNotNull(emailRequest.getTo());
+        Assertions.assertNotNull(emailRequest.getSubject());
+        Assertions.assertNotNull(emailRequest.getText());
+    }
+
 }

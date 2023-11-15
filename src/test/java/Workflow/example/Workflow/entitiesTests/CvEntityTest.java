@@ -51,4 +51,40 @@ class CvEntityTest {
         Assertions.assertTrue(cv.getCompetences().contains(competence2));
     }
 
+    @Test
+    void testToString() {
+        Cv cv = new Cv();
+        cv.setId(1L);
+        cv.setPrenom("John");
+        cv.setNomFamille("Doe");
+        cv.setEmail("john.doe@example.com");
+        cv.setTitreProfil("Software Developer");
+        cv.setTel(1234567890L);
+        cv.setAddresse("123 Main Street");
+        cv.setVille("City");
+
+        Assertions.assertNotNull(cv.toString());
+    }
+
+    @Test
+    void testEquals() {
+        Cv cv1 = new Cv();
+        cv1.setId(1L);
+
+        Cv cv2 = new Cv();
+        cv2.setId(1L);
+
+        Cv cv3 = new Cv();
+        cv3.setId(2L);
+
+        Assertions.assertEquals(cv1, cv2);
+        Assertions.assertNotEquals(cv1, cv3);
+    }
+
+    @Test
+    void testHashCode() {
+        Cv cv = new Cv();
+        cv.setId(1L);
+        Assertions.assertEquals(cv.hashCode(), cv.getClass().hashCode());
+    }
 }

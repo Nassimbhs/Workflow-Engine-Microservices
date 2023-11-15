@@ -43,5 +43,40 @@ class CongeEntityTest {
 
         Assertions.assertEquals(tacheAtraiter, conge.getTacheAtraiter());
     }
+    @Test
+    void testToString() {
+        Conge conge = new Conge();
+        conge.setId(1L);
+        conge.setDateDeb(new Date());
+        conge.setDateFin(new Date());
+        conge.setType("Vacation");
+        conge.setStatut("Approved");
+        conge.setCommentaire("Enjoy your time off!");
+        conge.setResponsable("John Doe");
 
+        Assertions.assertNotNull(conge.toString());
+    }
+
+    @Test
+    void testEquals() {
+        Conge cong1 = new Conge();
+        cong1.setId(1L);
+
+        Conge cong2 = new Conge();
+        cong2.setId(1L);
+
+        Conge cong3 = new Conge();
+        cong3.setId(2L);
+
+        Assertions.assertEquals(cong1, cong2);
+        Assertions.assertNotEquals(cong1, cong3);
+    }
+
+    @Test
+    void testHashCode() {
+        Conge conge = new Conge();
+        conge.setId(1L);
+
+        Assertions.assertEquals(conge.hashCode(), conge.getClass().hashCode());
+    }
 }

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.Assert.*;
+
 @ExtendWith(MockitoExtension.class)
 class WorkflowEntityTest {
     @Test
@@ -72,6 +74,50 @@ class WorkflowEntityTest {
                 "SGBD", "Task", "Event", new ArrayList<>());
 
         Assertions.assertEquals(workflow1.hashCode(), workflow2.hashCode());
+    }
+
+    @Test
+    void testToString() {
+        Workflow workflow = new Workflow();
+        workflow.setId(1L);
+        workflow.setName("Workflow1");
+        workflow.setDescription("Description for Workflow1");
+        workflow.setCreationDate(new Date());
+        workflow.setLastModifiedDate(new Date());
+        workflow.setEtat("Active");
+        workflow.setDeclencheur("Manual");
+        workflow.setWebhookUrl("https://example.com/webhook");
+        workflow.setJdbcUrl("jdbc:mysql://localhost:3306/database");
+        workflow.setUsername("username");
+        workflow.setPassword("password");
+        workflow.setSgbd("MySQL");
+        workflow.setTacheAecouter("TaskToListen");
+        workflow.setEvenement("Event");
+
+        Assertions.assertNotNull(workflow.toString());
+    }
+
+    @Test
+    void testEquals() {
+        Workflow workflow1 = new Workflow();
+        workflow1.setId(1L);
+
+        Workflow workflow2 = new Workflow();
+        workflow2.setId(1L);
+
+        Workflow workflow3 = new Workflow();
+        workflow3.setId(2L);
+
+        Assertions.assertEquals(workflow1, workflow2);
+        Assertions.assertNotEquals(workflow1, workflow3);
+    }
+
+    @Test
+    void testHashCode() {
+        Workflow workflow = new Workflow();
+        workflow.setId(1L);
+
+        Assertions.assertEquals(workflow.hashCode(), workflow.getClass().hashCode());
     }
 
 }

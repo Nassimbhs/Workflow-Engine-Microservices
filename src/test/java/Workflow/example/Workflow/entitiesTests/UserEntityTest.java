@@ -83,4 +83,27 @@ class UserEntityTest {
 
         Assertions.assertNotEquals(user1, user2);
     }
+
+    @Test
+    void testToString() {
+        User user = new User("testUser", "test@example.com", "password");
+
+        Assertions.assertNotNull(user.toString());
+    }
+
+    @Test
+    void testEquals() {
+        User user1 = new User("user1", "user1@example.com", "password");
+        user1.setId(1L);
+
+        User user2 = new User("user2", "user2@example.com", "password");
+        user2.setId(1L);
+
+        User user3 = new User("user3", "user3@example.com", "password");
+        user3.setId(2L);
+
+        Assertions.assertEquals(user1, user2);
+        Assertions.assertNotEquals(user1, user3);
+    }
+
 }

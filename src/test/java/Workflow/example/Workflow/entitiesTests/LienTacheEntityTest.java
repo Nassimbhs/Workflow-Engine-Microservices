@@ -33,4 +33,41 @@ class LienTacheEntityTest {
         Assertions.assertNotEquals(lienTache1, lienTache2);
     }
 
+    @Test
+    void testToString() {
+        LienTache lienTache = new LienTache();
+        lienTache.setId(1L);
+        lienTache.setSource("Source");
+        lienTache.setTarget("Target");
+        lienTache.setWorkflowId("Workflow123");
+        lienTache.setTacheSourceName("SourceTask");
+        lienTache.setTacheTargetName("TargetTask");
+        lienTache.setType("Dependency");
+
+        Assertions.assertNotNull(lienTache.toString());
+    }
+
+    @Test
+    void testEquals() {
+        LienTache lien1 = new LienTache();
+        lien1.setId(1L);
+
+        LienTache lien2 = new LienTache();
+        lien2.setId(1L);
+
+        LienTache lien3 = new LienTache();
+        lien3.setId(2L);
+
+        Assertions.assertEquals(lien1, lien2);
+        Assertions.assertNotEquals(lien1, lien3);
+    }
+
+    @Test
+    void testHashCode() {
+        LienTache lienTache = new LienTache();
+        lienTache.setId(1L);
+
+        Assertions.assertEquals(lienTache.hashCode(), lienTache.getClass().hashCode());
+    }
+
 }

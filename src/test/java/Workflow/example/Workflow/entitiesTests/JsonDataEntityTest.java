@@ -42,4 +42,39 @@ class JsonDataEntityTest {
 
         Assertions.assertEquals(tachesAtraiterList, jsonData.getTachesAtraiter());
     }
+
+    @Test
+    void testToString() {
+        JsonData jsonData = new JsonData();
+        jsonData.setId(1L);
+        jsonData.setData("{\"key\": \"value\"}");
+        jsonData.setResponsable(123L);
+        jsonData.setEtat("InProgress");
+
+        Assertions.assertNotNull(jsonData.toString());
+    }
+
+    @Test
+    void testEquals() {
+        JsonData data1 = new JsonData();
+        data1.setId(1L);
+
+        JsonData data2 = new JsonData();
+        data2.setId(1L);
+
+        JsonData data3 = new JsonData();
+        data3.setId(2L);
+
+        Assertions.assertEquals(data1, data2);
+        Assertions.assertNotEquals(data1, data3);
+    }
+
+    @Test
+    void testHashCode() {
+        JsonData jsonData = new JsonData();
+        jsonData.setId(1L);
+
+        Assertions.assertEquals(jsonData.hashCode(), jsonData.getClass().hashCode());
+    }
+
 }

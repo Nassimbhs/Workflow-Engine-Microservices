@@ -44,4 +44,40 @@ class ExperienceEntityTest {
         Assertions.assertEquals(cv, experience.getCv());
     }
 
+    @Test
+    void testToString() {
+        Experience experience = new Experience();
+        experience.setId(1L);
+        experience.setPoste("Software Developer");
+        experience.setEmployeur("ABC Inc");
+        experience.setDateDeb(new Date());
+        experience.setDateFin(new Date());
+        experience.setDescription("Worked on exciting projects");
+
+        Assertions.assertNotNull(experience.toString());
+    }
+
+    @Test
+    void testEquals() {
+        Experience exp1 = new Experience();
+        exp1.setId(1L);
+
+        Experience exp2 = new Experience();
+        exp2.setId(1L);
+
+        Experience exp3 = new Experience();
+        exp3.setId(2L);
+
+        Assertions.assertEquals(exp1, exp2);
+        Assertions.assertNotEquals(exp1, exp3);
+    }
+
+    @Test
+    void testHashCode() {
+        Experience experience = new Experience();
+        experience.setId(1L);
+
+        Assertions.assertEquals(experience.hashCode(), experience.getClass().hashCode());
+    }
+
 }

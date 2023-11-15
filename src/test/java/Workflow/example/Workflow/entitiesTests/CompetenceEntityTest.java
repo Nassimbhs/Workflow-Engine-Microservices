@@ -36,5 +36,35 @@ class CompetenceEntityTest {
 
         Assertions.assertEquals(cv, competence.getCv());
     }
+    @Test
+    void testToString() {
+        Competence competence = new Competence();
+        competence.setId(1L);
+        competence.setNomCompetence("Java Programming");
 
+        Assertions.assertNotNull(competence.toString());
+    }
+
+    @Test
+    void testEquals() {
+        Competence comp1 = new Competence();
+        comp1.setId(1L);
+
+        Competence comp2 = new Competence();
+        comp2.setId(1L);
+
+        Competence comp3 = new Competence();
+        comp3.setId(2L);
+
+        Assertions.assertEquals(comp1, comp2);
+        Assertions.assertNotEquals(comp1, comp3);
+    }
+
+    @Test
+    void testHashCode() {
+        Competence competence = new Competence();
+        competence.setId(1L);
+
+        Assertions.assertEquals(competence.hashCode(), competence.getClass().hashCode());
+    }
 }

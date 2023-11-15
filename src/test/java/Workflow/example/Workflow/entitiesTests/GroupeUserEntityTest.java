@@ -43,4 +43,36 @@ class GroupeUserEntityTest {
         Assertions.assertEquals(users, groupeUser.getUsers());
     }
 
+    @Test
+    void testToString() {
+        GroupeUser groupeUser = new GroupeUser();
+        groupeUser.setId(1L);
+        groupeUser.setNom("Team A");
+        groupeUser.setDescription("A great team");
+        Assertions.assertNotNull(groupeUser.toString());
+    }
+
+    @Test
+    void testEquals() {
+        GroupeUser group1 = new GroupeUser();
+        group1.setId(1L);
+
+        GroupeUser group2 = new GroupeUser();
+        group2.setId(1L);
+
+        GroupeUser group3 = new GroupeUser();
+        group3.setId(2L);
+
+        Assertions.assertEquals(group1, group2);
+        Assertions.assertNotEquals(group1, group3);
+    }
+
+    @Test
+    void testHashCode() {
+        GroupeUser groupeUser = new GroupeUser();
+        groupeUser.setId(1L);
+
+        Assertions.assertEquals(groupeUser.hashCode(), groupeUser.getClass().hashCode());
+    }
+
 }
