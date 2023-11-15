@@ -42,6 +42,6 @@ class CompetenceConverterTest {
         competence.setNomCompetence("SampleCompetence");
         return competence;
     }
-    
+
 }
 

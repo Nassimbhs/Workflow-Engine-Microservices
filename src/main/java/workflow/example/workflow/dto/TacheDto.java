@@ -1,15 +1,16 @@
 package workflow.example.workflow.dto;
 
 import lombok.*;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class TacheDto implements Serializable {
 
     private Long id;
