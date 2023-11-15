@@ -1,5 +1,6 @@
 package workflow.example.workflow.converterTests;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -7,8 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import workflow.example.workflow.converter.TacheConverter;
 import workflow.example.workflow.converter.WorkflowConverter;
-import workflow.example.workflow.dto.LienTacheDto;
-import workflow.example.workflow.dto.TacheAtraiterDto;
 import workflow.example.workflow.dto.WorkflowDto;
 import workflow.example.workflow.entity.Workflow;
 import java.util.Collections;
@@ -21,7 +20,6 @@ class WorkflowConverterTest {
 
     @Mock
     private TacheConverter tacheConverter;
-
     @InjectMocks
     private WorkflowConverter workflowConverter;
 
@@ -54,16 +52,17 @@ class WorkflowConverterTest {
         return new Workflow();
     }
 
-    private LienTacheDto createSampleLienTacheDto() {
-        LienTacheDto lienTacheDto = new LienTacheDto();
-        lienTacheDto.setId(1L);
-        return lienTacheDto;
-    }
+    @Test
+    void testDtoToEntity() {
+        WorkflowDto workflowDto = new WorkflowDto();
+        workflowDto.setId(1L);
+        workflowDto.setName("Test Workflow DTO");
 
-    private TacheAtraiterDto createSampleTacheAtraiterDto() {
-        TacheAtraiterDto tacheAtraiterDto = new TacheAtraiterDto();
-        tacheAtraiterDto.setId(1L);
-        return tacheAtraiterDto;
+        Workflow result = workflowConverter.dtoToEntity(workflowDto);
+
+        Assertions.assertNotNull(result);
+        assertEquals(workflowDto.getId(), result.getId());
+        assertEquals(workflowDto.getName(), result.getName());
     }
 
 }

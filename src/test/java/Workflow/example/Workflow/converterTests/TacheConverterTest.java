@@ -1,5 +1,6 @@
 package workflow.example.workflow.converterTests;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -9,15 +10,10 @@ import workflow.example.workflow.converter.LienTacheConverter;
 import workflow.example.workflow.converter.TacheAtraiterConverter;
 import workflow.example.workflow.converter.TacheConverter;
 import workflow.example.workflow.dto.TacheDto;
-import workflow.example.workflow.entity.LienTache;
 import workflow.example.workflow.entity.Tache;
-import workflow.example.workflow.entity.TacheAtraiter;
-
 import java.util.Collections;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -63,4 +59,16 @@ class TacheConverterTest {
         return new Tache();
     }
 
+    @Test
+    void testDtoToEntity() {
+        TacheDto tacheDto = new TacheDto();
+        tacheDto.setId(1L);
+        tacheDto.setName("Test Tache DTO");
+
+        Tache result = tacheConverter.dtoToEntity(tacheDto);
+
+        Assertions.assertNotNull(result);
+        assertEquals(tacheDto.getId(), result.getId());
+        assertEquals(tacheDto.getName(), result.getName());
+    }
 }
