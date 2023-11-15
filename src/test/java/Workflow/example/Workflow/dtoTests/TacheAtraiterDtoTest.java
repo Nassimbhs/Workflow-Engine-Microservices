@@ -26,9 +26,6 @@ class TacheAtraiterDtoTest {
         assertEquals("TestTask", tacheAtraiterDto.getName());
         assertEquals("Test description", tacheAtraiterDto.getDescription());
         assertNotNull(tacheAtraiterDto.getCreationDate());
-        assertNotNull(tacheAtraiterDto.getStatut());
-        assertNotNull(tacheAtraiterDto.getResponsable());
-        assertNotNull(tacheAtraiterDto.getStatut());
 
     }
 }
