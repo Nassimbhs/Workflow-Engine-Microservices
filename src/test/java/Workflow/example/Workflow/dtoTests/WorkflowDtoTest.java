@@ -21,7 +21,6 @@ class WorkflowDtoTest {
         String declencheur = "Manual";
         String webhookUrl = "http://example.com/webhook";
 
-        // Act
         WorkflowDto workflowDto = new WorkflowDto(id, name, description, null, null, etat, declencheur, webhookUrl, null, null, null, null, null, null, null);
 
         assertEquals(id, workflowDto.getId());

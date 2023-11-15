@@ -23,14 +23,18 @@ class EmailRequestEntityTest {
     }
     @Test
     void testDataAnnotation() {
-        // Create an instance for testing
         EmailRequest emailRequest = new EmailRequest();
         emailRequest.setTo("recipient@example.com");
         emailRequest.setSubject("Test Subject");
         emailRequest.setText("Hello, this is a test email.");
 
+        EmailRequest emailRequest2 = new EmailRequest();
+        emailRequest2.setTo("recipient@example.com");
+        emailRequest2.setSubject("Test Subject");
+        emailRequest2.setText("Hello, this is a test email.");
+
         Assertions.assertNotNull(emailRequest.toString());
-        Assertions.assertEquals(emailRequest, emailRequest);
+        Assertions.assertEquals(emailRequest2, emailRequest);
         Assertions.assertEquals(emailRequest.hashCode(), emailRequest.hashCode());
         Assertions.assertNotNull(emailRequest.getTo());
         Assertions.assertNotNull(emailRequest.getSubject());
