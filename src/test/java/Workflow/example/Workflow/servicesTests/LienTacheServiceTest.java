@@ -16,11 +16,8 @@ import workflow.example.workflow.entity.Tache;
 import workflow.example.workflow.repository.LienTacheRepository;
 import workflow.example.workflow.repository.TacheRepository;
 import workflow.example.workflow.service.LienTacheService;
-
 import java.util.ArrayList;
 import java.util.Optional;
-
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -130,6 +127,22 @@ class LienTacheServiceTest {
         LienTache result = lienTacheService.findLinkById(linkId);
 
         assertEquals(expectedLink, result);
+    }
+
+    @Test
+    void testDeleteLinkById_LinkNotFound() {
+        long linkId = 1L;
+        when(lienTacheRepository.findById(linkId)).thenReturn(Optional.empty());
+
+        try {
+            lienTacheService.deleteLinkById(linkId);
+        } catch (ResponseStatusException ex) {
+            assertEquals(HttpStatus.NOT_FOUND, ex.getStatus());
+            assertEquals("Link not found !", ex.getReason());
+        }
+
+        verify(lienTacheRepository, times(1)).findById(linkId);
+        verify(lienTacheRepository, never()).delete(any());
     }
 
 }

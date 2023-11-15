@@ -7,17 +7,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import workflow.example.workflow.entity.Competence;
 import workflow.example.workflow.entity.Cv;
 import java.util.ArrayList;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 class CvEntityTest {
     @Test
     void testCvEqualsAndHashCode() {
-        Cv cv1 = new Cv(1L, "John", "Doe", "john.doe@example.com", "Software Engineer", 123456789L,
-                "123 Main St", "City", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+        Cv cv1 = new Cv(1L, "Nassim", "Ben Hassine", "benhassinenassim98@gmail.com", "Software Engineer", 123456789L,
+                "Rue Palestine", "Tunis", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
-        Cv cv2 = new Cv(1L, "Jane", "Doe", "jane.doe@example.com", "Data Scientist", 987654321L,
-                "456 Oak St", "Town", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+        Cv cv2 = new Cv(1L, "Ahmed", "Ben Hassine", "nassim.benhassine@esprit.tn", "Data Scientist", 987654321L,
+                "20 Mars", "Nabeul", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
         Assertions.assertEquals(cv1, cv2);
@@ -87,4 +88,15 @@ class CvEntityTest {
         cv.setId(1L);
         Assertions.assertEquals(cv.hashCode(), cv.getClass().hashCode());
     }
+
+    @Test
+    void testEquals_ObjectIsOfDifferentClass_ReturnsFalse() {
+        Cv cv = new Cv();
+        Object differentObject = mock(Object.class);
+
+        boolean result = cv.equals(differentObject);
+
+        Assertions.assertFalse(result);
+    }
+
 }
